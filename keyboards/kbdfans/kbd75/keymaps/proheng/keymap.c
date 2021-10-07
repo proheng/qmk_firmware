@@ -13,7 +13,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_PGUP, 
             KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,  KC_PGDN, 
             KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, KC_UP,   KC_END, 
-            KC_LCTL, KC_LALT, KC_LGUI, LT(2,KC_SPC),     TG(2),   KC_RALT, KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
+            KC_LCTL, KC_LALT, KC_LGUI, LT(2,KC_SPC),     KC_NO,   KC_RALT, KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
         ),
     // Windows Layuout
 	[1] = LAYOUT_ansi_1u(
@@ -22,7 +22,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
-            _______, _______, KC_LCTL, LT(3,KC_SPC),     TG(3),   _______, _______, _______, _______, _______
+            _______, _______, KC_LCTL, LT(3,KC_SPC),     _______, _______, _______, _______, _______, _______
         ),
     // MAC VIM Layout
 	[2] = LAYOUT_ansi_1u(
@@ -38,7 +38,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RESET,   KC_NO,   KC_NO,   
             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_HOME, KC_END,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   
             KC_TAB,  KC_NO,   VIM_W,   VIM_E,   KC_NO,   KC_NO,   VIM_Y,   VIM_U,   VIM_I,   VIM_O,   VIM_P,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   
-            KC_NO,   VIM_A,   VIM_S,   VIM_D,   KC_NO,   KC_NO,   VIM_H,   VIM_J,   VIM_K,   VIM_L,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   
+            KC_NO,   VIM_A,   VIM_S,   VIM_D,   KC_NO,   KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_NO,   KC_NO,   KC_NO,   KC_NO,   
             KC_LSFT, KC_NO,   VIM_X,   VIM_C,   VIM_V,   VIM_B,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, KC_NO,   KC_NO,   
             KC_LCTL, KC_LALT, KC_NO,   KC_NO,            _______, KC_RALT, KC_RCTL, KC_NO,   KC_NO,   KC_NO
         )
@@ -143,7 +143,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case VIM_I:
           if (record->event.pressed) {
             switch (VIM_QUEUE) {
-              case KC_NO: layer_on(INSERT_MODE); break;
+              /* case KC_NO: layer_on(INSERT_MODE); break; */
               case VIM_C: VIM_LEADER(VIM_CI); break;
               case VIM_D: VIM_LEADER(VIM_DI); break;
               case VIM_V: VIM_LEADER(VIM_VI); break;
@@ -231,6 +231,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   }
 
+  /* This is the windows' version */
   if(layer_state_is(3))
   {
       switch (keycode) {
@@ -255,7 +256,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           if (record->event.pressed) {
             switch(VIM_QUEUE) {
               case KC_NO: SHIFTED ? VIM_CHANGE_LINE(): VIM_LEADER(VIM_C); break;
-              case VIM_C: VIM_CHANGE_WHOLE_LINE(); break;
+              /* case VIM_C: VIM_CHANGE_WHOLE_LINE(); break; */
+              case VIM_C: 
+                          TAP(KC_HOME);
+                          SHIFT(KC_END);
+                          CTRL(KC_X);
+                          break;
             }
           }
           return false;
@@ -263,8 +269,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case VIM_D:
           if (record->event.pressed) {
             switch(VIM_QUEUE) {
-              case KC_NO: SHIFTED ? TAP(KC_DEL) : VIM_LEADER(VIM_D); break;
-              case VIM_D: VIM_DELETE_WHOLE_LINE(); break;
+              case KC_NO: SHIFTED ? CTRL(KC_X) : VIM_LEADER(VIM_D); break;
+              case VIM_D: 
+                          TAP(KC_HOME);
+                          SHIFT(KC_END);
+                          CTRL(KC_X);
+                          break;
             }
           }
           return false;
@@ -295,7 +305,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case VIM_I:
           if (record->event.pressed) {
             switch (VIM_QUEUE) {
-              case KC_NO: layer_on(INSERT_MODE); break;
+              /* case KC_NO: layer_on(INSERT_MODE); break; */
               case VIM_C: VIM_LEADER(VIM_CI); break;
               case VIM_D: VIM_LEADER(VIM_DI); break;
               case VIM_V: VIM_LEADER(VIM_VI); break;
@@ -356,7 +366,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           return false;
 
         case VIM_U:
-          if (record->event.pressed) { VIM_UNDO(); }
+          if (record->event.pressed) { CTRL(KC_Z); }
           return false;
 
         case VIM_V:
