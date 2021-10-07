@@ -27,20 +27,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // MAC VIM Layout
 	[2] = LAYOUT_ansi_1u(
             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RESET,   KC_NO,   KC_NO,   
-            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_HOME, KC_END,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   
+            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   LGUI(KC_LEFT),    LGUI(KC_RGHT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   
             KC_TAB,  KC_NO,   LALT(KC_RGHT),    LALT(KC_RGHT),    KC_NO,   KC_NO,   LCTL(KC_INS),     LGUI(KC_Z),       TO(0),   KC_ENT,  LSFT(KC_INS),     KC_NO,   KC_NO,   KC_NO,   KC_NO,   
-            KC_NO,   VIM_A,   VIM_S,   VIM_D,   KC_NO,   KC_NO,   VIM_H,   VIM_J,   VIM_K,   VIM_L,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   
-            KC_LSFT, KC_NO,   VIM_X,   VIM_C,   VIM_V,   LALT(KC_LEFT),   KC_NO,   KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_RSFT, KC_NO,   KC_NO,   
-            KC_LCTL, KC_LALT, KC_NO,   KC_NO,            TO(1),  KC_RALT, KC_RCTL, KC_NO,   KC_NO,   KC_NO
+            KC_NO,   VIM_A,   VIM_S,   LGUI(KC_X),       KC_NO,   KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,   KC_NO,   KC_NO,   KC_NO,   
+            KC_LSFT, KC_NO,   LGUI(KC_X),       VIM_C,   VIM_V,   LALT(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, KC_NO,   KC_NO,   
+            KC_LCTL, KC_LALT, KC_NO,   KC_NO,            TO(0),   KC_RALT, KC_RCTL, KC_NO,   KC_NO,   KC_NO
         ),
     // Windows VIM Layuout
 	[3] = LAYOUT_ansi_1u(
             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RESET,   KC_NO,   KC_NO,   
             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_HOME, KC_END,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   
             KC_TAB,  KC_NO,   LCTL(KC_RGHT),    LCTL(KC_RGHT),    KC_NO,   KC_NO,   LCTL(KC_INS),     LCTL(KC_Z),       TO(1),   KC_ENT,  LSFT(KC_INS),     KC_NO,   KC_NO,   KC_NO,   KC_NO,   
-            KC_NO,   VIM_A,   VIM_S,   VIM_D,   KC_NO,   KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_NO,   KC_NO,   KC_NO,   KC_NO,   
-            KC_LSFT, KC_NO,   VIM_X,   VIM_C,   VIM_V,   LCTL(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, KC_NO,   KC_NO,   
-            KC_LCTL, KC_LALT, KC_NO,   KC_NO,            TO(2),   KC_RALT, KC_RCTL, KC_NO,   KC_NO,   KC_NO
+            KC_NO,   VIM_A,   VIM_S,   LCTL(KC_X),      KC_NO,   KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_NO,   KC_NO,   KC_NO,   KC_NO,   
+            KC_LSFT, KC_NO,   LCTL(KC_X),  VIM_C,   VIM_V,   LCTL(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, KC_NO,   KC_NO,   
+            KC_LCTL, KC_LALT, KC_NO,   KC_NO,            TO(1),   KC_RALT, KC_RCTL, KC_NO,   KC_NO,   KC_NO
         )
 };
 
