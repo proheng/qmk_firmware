@@ -2,9 +2,9 @@
 #define RGBLIGHT_LAYERS
 #define RGBLIST_SLEEP
 #define COMBO_TERM 300
-#define TAPPING_TERM 175
+#define TAPPING_TERM 250
 #define ONESHOT_TAP_TOGGLE 1
-#define ONESHOT_TIMEOUT 1000
+#define ONESHOT_TIMEOUT 1500
 
 
 #define MAC_QWERTY 0
@@ -17,3 +17,5 @@
 #define WIN_VIM_VISUAL 5
 
 #define GEN_FN 15
+
+
