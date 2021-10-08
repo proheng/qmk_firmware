@@ -62,11 +62,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             TO(MAC_VIM),KC_NO,KC_NO,   LGUI(KC_X),       KC_NO,   KC_NO,   LSFT(KC_LEFT),    LSFT(KC_DOWN),    LSFT(KC_UP),      LSFT(KC_RGHT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   
             KC_LSFT, KC_NO,   VIM_X,   KC_NO,   TO(MAC_VIM),      LSA(KC_LEFT),     KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, KC_NO,   KC_NO,   
             KC_LCTL, KC_LALT, KC_NO,   KC_NO,   TO(MAC_QWERTY),   KC_RALT, KC_RCTL, KC_NO,   KC_NO,   KC_NO
-        )
+        ),
     // TODO
     // WIN VIM VISUAL Layout
     // Every keystroke will be shifted to simulate selection in vim visual mode.
-
+	[WIN_VIM_VISUAL] = LAYOUT_ansi_1u(
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+        ),
+	[GEN_FN] = LAYOUT_ansi_1u(
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,   KC_F11,  KC_F12,  _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+        )
 };
 
 
@@ -77,13 +92,15 @@ const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0
 const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_TEAL} );
 const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_TEAL} );
 const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_YELLOW} );
+const rgblight_segment_t PROGMEM my_layer15_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_RED} );
 
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
     my_layer0_layer,    
     my_layer1_layer,
     my_layer2_layer,
     my_layer3_layer,
-    my_layer4_layer
+    my_layer4_layer,
+    my_layer15_layer
 );
 
 void keyboard_post_init_user(void) {
@@ -100,6 +117,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(2, layer_state_cmp(state, MAC_VIM));
     rgblight_set_layer_state(3, layer_state_cmp(state, WIN_VIM));
     rgblight_set_layer_state(4, layer_state_cmp(state, MAC_VIM_VISUAL));
+    rgblight_set_layer_state(5, layer_state_cmp(state, GEN_FN));
     return state;
 }
 
