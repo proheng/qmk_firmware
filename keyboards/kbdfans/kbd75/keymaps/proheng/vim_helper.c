@@ -34,5 +34,5 @@ void ALT(uint16_t keycode) {
 
 enum custom_keycodes {
     VIM_Y = SAFE_RANGE,
-    VIM_X
+    VIM_X,
 };

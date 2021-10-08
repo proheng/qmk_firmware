@@ -2,6 +2,8 @@
 #define RGBLIGHT_LAYERS
 #define RGBLIST_SLEEP
 #define COMBO_TERM 300
+#define TAPPING_TERM 175
+
 
 #define MAC_QWERTY 0
 #define WIN_QWERTY 1
