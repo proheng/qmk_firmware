@@ -63,6 +63,7 @@ enum {
     TD_ESC_MAC_VIM,
     TD_ESC_MAC_QWERTY,
     TD_LGUI,
+    TD_FN,
     SOME_OTHER_DANCE
 };
 
@@ -130,22 +131,61 @@ static td_tap_t tap_state = {
 /* These are the key specified handler */ 
 /* ------------------------------------------------------------------------------------------------------- */
 
+void gui_finished(qk_tap_dance_state_t *state, void *user_data) {
+    tap_state.state = cur_dance(state);
+    switch (tap_state.state) {
+        case TD_SINGLE_TAP: 
+            if(layer_state_is(MAC_QWERTY))
+            {
+                layer_move(WIN_QWERTY);
+            }
+            else if(layer_state_is(WIN_QWERTY))
+            {
+                layer_move(MAC_QWERTY);
+            }
+            break;
+            /* set_oneshot_layer(GEN_FN, ONESHOT_START); break; */
+        case TD_SINGLE_HOLD: register_code(KC_LGUI); break;
+        case TD_DOUBLE_TAP: 
+        case TD_DOUBLE_HOLD: break;
+        // Last case is for fast typing. Assuming your key is `f`:
+        // For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
+        // In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
+        case TD_DOUBLE_SINGLE_TAP: //tap_code(KC_X); register_code(KC_X); // I don't need them.
+        case TD_NONE: 
+        case TD_UNKNOWN:
+        case TD_TRIPLE_TAP:
+        case TD_TRIPLE_HOLD:
+            break;
+    }
+}
+
+void gui_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (tap_state.state) {
+        case TD_SINGLE_TAP: 
+            /* clear_oneshot_layer_state(ONESHOT_PRESSED); break; */
+        case TD_SINGLE_HOLD: 
+            unregister_code(KC_LGUI); break;
+        case TD_DOUBLE_TAP: break;
+        case TD_DOUBLE_HOLD: break;
+        case TD_DOUBLE_SINGLE_TAP:// unregister_code(KC_X); break; // I don't need them.
+        case TD_NONE: 
+        case TD_UNKNOWN:
+        case TD_TRIPLE_TAP:
+        case TD_TRIPLE_HOLD:
+            break;
+    }
+    tap_state.state = TD_NONE;
+}
+
 void fn_finished(qk_tap_dance_state_t *state, void *user_data) {
     tap_state.state = cur_dance(state);
     switch (tap_state.state) {
-        case TD_SINGLE_TAP: set_oneshot_layer(GEN_FN, ONESHOT_START); break;
-        case TD_SINGLE_HOLD: register_code(KC_LGUI); break;
+        case TD_SINGLE_TAP: 
+            set_oneshot_layer(GEN_FN, ONESHOT_START); break;
+        case TD_SINGLE_HOLD: 
         case TD_DOUBLE_TAP: 
-                if(layer_state_is(MAC_QWERTY))
-                {
-                    layer_move(WIN_QWERTY);
-                }
-                else if(layer_state_is(WIN_QWERTY))
-                {
-                    layer_move(MAC_QWERTY);
-                }
-                break;
-        case TD_DOUBLE_HOLD: break;
+        case TD_DOUBLE_HOLD: 
         // Last case is for fast typing. Assuming your key is `f`:
         // For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
         // In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
@@ -160,10 +200,11 @@ void fn_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 void fn_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
-        case TD_SINGLE_TAP: clear_oneshot_layer_state(ONESHOT_PRESSED); break;
-        case TD_SINGLE_HOLD: unregister_code(KC_LGUI); break;
-        case TD_DOUBLE_TAP: break;
-        case TD_DOUBLE_HOLD: break;
+        case TD_SINGLE_TAP: 
+            clear_oneshot_layer_state(ONESHOT_PRESSED); break;
+        case TD_SINGLE_HOLD: 
+        case TD_DOUBLE_TAP: 
+        case TD_DOUBLE_HOLD: 
         case TD_DOUBLE_SINGLE_TAP:// unregister_code(KC_X); break; // I don't need them.
         case TD_NONE: 
         case TD_UNKNOWN:
@@ -173,4 +214,3 @@ void fn_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
     tap_state.state = TD_NONE;
 }
-
