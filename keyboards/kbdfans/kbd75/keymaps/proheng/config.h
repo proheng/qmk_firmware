@@ -1,11 +1,7 @@
 #include "config_common.h"
 #define RGBLIGHT_LAYERS
-#define COMBO_TERM 300
-
 #define RGBLIST_SLEEP
-/* #ifndef CONFIG_USER_H */
-/* #define CONFIG_USER_H */
-/* #endif */
+#define COMBO_TERM 300
 
 #define MAC_QWERTY 0
 #define WIN_QWERTY 1
