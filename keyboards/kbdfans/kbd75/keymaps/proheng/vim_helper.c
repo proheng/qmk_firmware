@@ -134,7 +134,9 @@ static td_tap_t tap_state = {
 void gui_finished(qk_tap_dance_state_t *state, void *user_data) {
     tap_state.state = cur_dance(state);
     switch (tap_state.state) {
-        case TD_SINGLE_TAP: 
+        case TD_SINGLE_TAP: register_code(KC_LGUI); break;
+        case TD_SINGLE_HOLD: register_code(KC_LGUI); break;
+        case TD_DOUBLE_TAP: 
             if(layer_state_is(MAC_QWERTY))
             {
                 layer_move(WIN_QWERTY);
@@ -144,10 +146,7 @@ void gui_finished(qk_tap_dance_state_t *state, void *user_data) {
                 layer_move(MAC_QWERTY);
             }
             break;
-            /* set_oneshot_layer(GEN_FN, ONESHOT_START); break; */
-        case TD_SINGLE_HOLD: register_code(KC_LGUI); break;
-        case TD_DOUBLE_TAP: 
-        case TD_DOUBLE_HOLD: break;
+        case TD_DOUBLE_HOLD: 
         // Last case is for fast typing. Assuming your key is `f`:
         // For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
         // In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
@@ -162,10 +161,8 @@ void gui_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 void gui_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
-        case TD_SINGLE_TAP: 
-            /* clear_oneshot_layer_state(ONESHOT_PRESSED); break; */
-        case TD_SINGLE_HOLD: 
-            unregister_code(KC_LGUI); break;
+        case TD_SINGLE_TAP: unregister_code(KC_LGUI); break;
+        case TD_SINGLE_HOLD: unregister_code(KC_LGUI); break;
         case TD_DOUBLE_TAP: break;
         case TD_DOUBLE_HOLD: break;
         case TD_DOUBLE_SINGLE_TAP:// unregister_code(KC_X); break; // I don't need them.
