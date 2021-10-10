@@ -16,6 +16,7 @@ void win_vim_visual_keymap(uint16_t keycode, keyrecord_t *record){
             }
             break;
         case VIM_X:
+        case VIM_D:
             if(record->event.pressed)
             {
                 CTRL(KC_X);
