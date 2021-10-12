@@ -1,20 +1,26 @@
 #include "quantum_keycodes.h"
-#include "vim_helper.c"
+#include "quantum.h"
 #include "action_layer.h"
 #include "version.h"
-#include "mac_vim_keymap.c"
-#include "win_vim_keymap.c"
 #include QMK_KEYBOARD_H
 
 
+#include "custom_keycodes.c"
+#include "tap_dance.c"
+#include "mac_vim_keymap.c"
+#include "win_vim_keymap.c"
+
+/* #include "keymap_combo.h" */
+/* #include "artsey.c" */
+
 // Tap dance enums
 enum {
-    TD_ESC_VIM,
+    TD_CAP,
     TD_FN,
     SOME_OTHER_DANCE
 };
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_ESC_VIM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cap_finished, cap_reset),
+    [TD_CAP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cap_finished, cap_reset),
     [TD_FN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
 };
 
@@ -24,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_NO,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET,   KC_INS,  KC_DEL, 
             KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_HOME, 
             KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_PGUP, 
-            TD(TD_ESC_VIM),        KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,  KC_PGDN, 
+            TD(TD_CAP),        KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,  KC_PGDN, 
             KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, KC_UP,   KC_END, 
             KC_LCTL, KC_LALT, KC_LGUI,    LT(MAC_VIM, KC_SPC),       TD(TD_FN),        KC_RALT, KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
         ),
@@ -33,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
-            TD(TD_ESC_VIM),        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            TD(TD_CAP),        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
             _______, _______, _______,          LT(WIN_VIM, KC_SPC),       _______, _______, _______, _______, _______, _______
         ),
@@ -42,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RESET,   KC_NO,   KC_NO,   
             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   LGUI(KC_LEFT),    LGUI(KC_RGHT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   
             KC_TAB,  KC_NO,   LALT(KC_RGHT),    LALT(KC_RGHT),    KC_NO,   KC_NO,   LCTL(KC_INS),     LGUI(KC_Z),       TO(MAC_QWERTY),   KC_ENT,  LSFT(KC_INS),     KC_NO,   KC_NO,   KC_NO,   KC_NO,   
-            TD(TD_ESC_VIM),   KC_PGDN, KC_NO,   KC_BSPC, KC_PGUP, KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,   KC_NO,   KC_NO,   KC_NO,   
+            TD(TD_CAP),       KC_PGDN, KC_NO,   KC_BSPC, KC_PGUP, KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,   KC_NO,   KC_NO,   KC_NO,   
             KC_LSFT, KC_NO,   KC_DEL,  KC_NO,   TO(MAC_VIM_VISUAL),        LALT(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, KC_NO,   KC_NO,   
             KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO,   KC_NO,   KC_NO
         ),
@@ -51,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RESET,   KC_NO,   KC_NO,   
             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_HOME, KC_END,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   
             KC_TAB,  KC_NO,   LCTL(KC_RGHT),    LCTL(KC_RGHT),    KC_NO,   KC_NO,   LCTL(KC_INS),     LCTL(KC_Z),       TO(WIN_QWERTY),   KC_ENT,  LSFT(KC_INS),     KC_NO,   KC_NO,   KC_NO,   KC_NO,   
-            TD(TD_ESC_VIM),   KC_PGDN, KC_NO,   KC_BSPC, KC_PGUP, KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_NO,   KC_NO,   KC_NO,   KC_NO,   
+            TD(TD_CAP),       KC_PGDN, KC_NO,   KC_BSPC, KC_PGUP, KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_NO,   KC_NO,   KC_NO,   KC_NO,   
             KC_LSFT, KC_NO,   KC_DEL,  KC_NO,   TO(WIN_VIM_VISUAL),        LCTL(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, KC_NO,   KC_NO,   
             KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO,   KC_NO,   KC_NO
         ),
@@ -75,6 +81,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_LSFT, KC_NO,   VIM_X,   KC_NO,   TO(WIN_VIM),      LSFT(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, KC_NO,   KC_NO,   
             KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO,   KC_NO,   KC_NO
         ),
+	[MOUSE_KEY] = LAYOUT_ansi_1u(
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, KC_BTN1, KC_BTN2, _______, _______, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, _______, 
+            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+        ),
 	[GEN_FN] = LAYOUT_ansi_1u(
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
             _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,   KC_F11,  KC_F12,  _______, _______, 
@@ -94,6 +108,7 @@ const rgblight_segment_t PROGMEM mac_vim_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 
 const rgblight_segment_t PROGMEM win_vim_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_TEAL} );
 const rgblight_segment_t PROGMEM mac_vim_visual_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_YELLOW} );
 const rgblight_segment_t PROGMEM win_vim_visual_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_YELLOW} );
+const rgblight_segment_t PROGMEM mouse_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_GREEN} );
 const rgblight_segment_t PROGMEM fn_visual_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_RED} );
 
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
@@ -103,7 +118,8 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
     win_vim_layer,
     mac_vim_visual_layer,
     win_vim_visual_layer,
-    fn_visual_layer
+    fn_visual_layer,
+    mouse_layer
 );
 
 void keyboard_post_init_user(void) {
@@ -122,6 +138,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(4, layer_state_cmp(state, MAC_VIM_VISUAL));
     rgblight_set_layer_state(5, layer_state_cmp(state, WIN_VIM_VISUAL));
     rgblight_set_layer_state(6, layer_state_cmp(state, GEN_FN));
+    rgblight_set_layer_state(7, layer_state_cmp(state, MOUSE_KEY));
     return state;
 }
 

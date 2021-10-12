@@ -34,11 +34,6 @@ void ALT(uint16_t keycode) {
   RELEASE(KC_LALT);
 }
 
-enum custom_keycodes {
-    VIM_Y = SAFE_RANGE,
-    VIM_X,
-    VIM_D,
-};
 
 /* Quad Function Tap-Dance */
 /* https://beta.docs.qmk.fm/using-qmk/software-features/feature_tap_dance#example-4-quad-function-tap-dance-id-example-4 */
@@ -200,8 +195,25 @@ void cap_finished(qk_tap_dance_state_t *state, void *user_data) {
                 layer_move(WIN_QWERTY);
                 break;
             }
+            break;
         case TD_DOUBLE_TAP: 
+            if(!layer_state_is(MOUSE_KEY))
+            {
+                layer_on(MOUSE_KEY);
+                break;
+            }
+            if(layer_state_is(MOUSE_KEY))
+            {
+                layer_off(MOUSE_KEY);
+                break;
+            }
+            break;
         case TD_DOUBLE_HOLD: 
+            if(!layer_state_is(MOUSE_KEY))
+            {
+                layer_on(MOUSE_KEY);
+                break;
+            }
         // Last case is for fast typing. Assuming your key is `f`:
         // For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
         // In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
@@ -218,9 +230,14 @@ void cap_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
         case TD_SINGLE_TAP: 
             RELEASE(KC_ESC); break;
-        case TD_SINGLE_HOLD: 
-        case TD_DOUBLE_TAP: 
+        case TD_SINGLE_HOLD: break; 
+        case TD_DOUBLE_TAP: break;
         case TD_DOUBLE_HOLD: 
+            if(layer_state_is(MOUSE_KEY))
+            {
+                layer_off(MOUSE_KEY);
+                break;
+            }
         case TD_DOUBLE_SINGLE_TAP:// unregister_code(KC_X); break; // I don't need them.
         case TD_NONE: 
         case TD_UNKNOWN:
