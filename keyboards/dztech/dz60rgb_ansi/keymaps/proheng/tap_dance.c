@@ -147,6 +147,9 @@ void fn_finished(qk_tap_dance_state_t *state, void *user_data) {
         case TD_NONE: 
         case TD_UNKNOWN:
         case TD_TRIPLE_TAP:
+            reset_keyboard();
+            reset_tap_dance(state);
+            break;
         case TD_TRIPLE_HOLD:
             break;
     }
@@ -161,7 +164,7 @@ void fn_reset(qk_tap_dance_state_t *state, void *user_data) {
         case TD_DOUBLE_HOLD: 
         case TD_DOUBLE_SINGLE_TAP:// unregister_code(KC_X); break; // I don't need them.
         case TD_TRIPLE_TAP: 
-        case TD_TRIPLE_HOLD: TAP(RESET);break;
+        case TD_TRIPLE_HOLD: 
         case TD_NONE: 
         case TD_UNKNOWN:
             break;
@@ -197,23 +200,9 @@ void cap_finished(qk_tap_dance_state_t *state, void *user_data) {
             }
             break;
         case TD_DOUBLE_TAP: 
-            if(!layer_state_is(MOUSE_KEY))
-            {
-                layer_on(MOUSE_KEY);
-                break;
-            }
-            if(layer_state_is(MOUSE_KEY))
-            {
-                layer_off(MOUSE_KEY);
-                break;
-            }
             break;
         case TD_DOUBLE_HOLD: 
-            if(!layer_state_is(MOUSE_KEY))
-            {
-                layer_on(MOUSE_KEY);
-                break;
-            }
+            break;
         // Last case is for fast typing. Assuming your key is `f`:
         // For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
         // In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
@@ -233,11 +222,6 @@ void cap_reset(qk_tap_dance_state_t *state, void *user_data) {
         case TD_SINGLE_HOLD: break; 
         case TD_DOUBLE_TAP: break;
         case TD_DOUBLE_HOLD: 
-            if(layer_state_is(MOUSE_KEY))
-            {
-                layer_off(MOUSE_KEY);
-                break;
-            }
         case TD_DOUBLE_SINGLE_TAP:// unregister_code(KC_X); break; // I don't need them.
         case TD_NONE: 
         case TD_UNKNOWN:

@@ -80,13 +80,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT, KC_NO,   VIM_X,   KC_NO,   TO(WIN_VIM),      LSFT(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT,
         KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO
     ),
-	[MOUSE_KEY] = LAYOUT_60_ansi(
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  
-        _______, _______, _______, _______, _______, _______, _______, KC_BTN1, KC_BTN2, _______, _______, _______, _______, _______,  
-        _______, _______, _______, _______, _______, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______, _______, 
-        _______, _______, _______, _______, _______, _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______,
-        _______, _______, _______, KC_BTN1, _______, _______, _______, _______
-    ),
 	[GEN_FN] = LAYOUT_60_ansi(
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,   KC_F11,  KC_F12,  _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
@@ -96,49 +89,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
-
-
-/* RGB set up */
-/* const rgblight_segment_t PROGMEM mac_qwerty_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_CORAL} ); */
-/* const rgblight_segment_t PROGMEM win_qwerty_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_GOLDENROD} ); */
-/* const rgblight_segment_t PROGMEM mac_vim_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_TEAL} ); */
-/* const rgblight_segment_t PROGMEM win_vim_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_TEAL} ); */
-/* const rgblight_segment_t PROGMEM mac_vim_visual_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_YELLOW} ); */
-/* const rgblight_segment_t PROGMEM win_vim_visual_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_YELLOW} ); */
-/* const rgblight_segment_t PROGMEM mouse_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_GREEN} ); */
-/* const rgblight_segment_t PROGMEM fn_visual_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 16, HSV_RED} ); */
-
-/* const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST( */
-/*     mac_qwerty_layer, */    
-/*     win_qwerty_layer, */
-/*     mac_vim_layer, */
-/*     win_vim_layer, */
-/*     mac_vim_visual_layer, */
-/*     win_vim_visual_layer, */
-/*     fn_visual_layer, */
-/*     mouse_layer */
-/* ); */
-
-/* void keyboard_post_init_user(void) { */
-/*     rgblight_layers = my_rgb_layers; */
-/* } */
-
-/* layer_state_t default_layer_state_set_user(layer_state_t state) { */
-/*     rgblight_set_layer_state(0, layer_state_cmp(state, MAC_QWERTY)); */
-/*     return state; */
-/* } */
-
-/* layer_state_t layer_state_set_user(layer_state_t state) { */
-/*     rgblight_set_layer_state(1, layer_state_cmp(state, WIN_QWERTY)); */
-/*     rgblight_set_layer_state(2, layer_state_cmp(state, MAC_VIM)); */
-/*     rgblight_set_layer_state(3, layer_state_cmp(state, WIN_VIM)); */
-/*     rgblight_set_layer_state(4, layer_state_cmp(state, MAC_VIM_VISUAL)); */
-/*     rgblight_set_layer_state(5, layer_state_cmp(state, WIN_VIM_VISUAL)); */
-/*     rgblight_set_layer_state(6, layer_state_cmp(state, GEN_FN)); */
-/*     rgblight_set_layer_state(7, layer_state_cmp(state, MOUSE_KEY)); */
-/*     return state; */
-/* } */
-
+void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    for (uint8_t i = led_min; i <= led_max; i++) {
+        if(layer_state_is(MAC_QWERTY)) { rgb_matrix_set_color(i, RGB_CORAL); }
+        if(layer_state_is(WIN_QWERTY)) { rgb_matrix_set_color(i, RGB_GOLDENROD); }
+        if(layer_state_is(MAC_VIM) || layer_state_is(WIN_VIM)) { rgb_matrix_set_color(i, RGB_TEAL); }
+        if(layer_state_is(MAC_VIM_VISUAL) || layer_state_is(WIN_VIM_VISUAL)) { rgb_matrix_set_color(i, RGB_YELLOW); }
+        if(layer_state_is(GEN_FN)) { rgb_matrix_set_color(i, RGB_RED); }
+    }
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if(layer_state_is(MAC_VIM_VISUAL))

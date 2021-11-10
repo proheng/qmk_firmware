@@ -1,4 +1,3 @@
 TAP_DANCE_ENABLE = yes
 # COMBO_ENABLE = no
-MOUSEKEYS_ENABLE = yes 
 
