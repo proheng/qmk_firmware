@@ -10,7 +10,7 @@
 #define WIN_QWERTY 1
 #define MAC_VIM 2
 #define WIN_VIM 3
-#define MAC_VIM_VISUAL 4
-#define WIN_VIM_VISUAL 5
+/* #define MAC_VIM_VISUAL 4 */
+/* #define WIN_VIM_VISUAL 5 */
 #define GEN_FN 15
 
