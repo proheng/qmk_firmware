@@ -200,6 +200,7 @@ void cap_finished(qk_tap_dance_state_t *state, void *user_data) {
             }
             break;
         case TD_DOUBLE_TAP: 
+            PRESS(KC_ENT); break;
             break;
         case TD_DOUBLE_HOLD: 
             break;
@@ -220,7 +221,8 @@ void cap_reset(qk_tap_dance_state_t *state, void *user_data) {
         case TD_SINGLE_TAP: 
             RELEASE(KC_ESC); break;
         case TD_SINGLE_HOLD: break; 
-        case TD_DOUBLE_TAP: break;
+        case TD_DOUBLE_TAP: 
+            RELEASE(KC_ENT); break;
         case TD_DOUBLE_HOLD: 
         case TD_DOUBLE_SINGLE_TAP:// unregister_code(KC_X); break; // I don't need them.
         case TD_NONE: 
