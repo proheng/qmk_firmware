@@ -90,16 +90,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    rgb_matrix_set_color(7, RGB_TEAL);//KC_6
+    rgb_matrix_set_color(8, RGB_TEAL);//KC_5
+    rgb_matrix_set_color(2, RGB_GREEN);//KC_-
+    rgb_matrix_set_color(1, RGB_GREEN);//KC_=
+
+    rgb_matrix_set_color(21, RGB_TEAL);//KC_Y
+    rgb_matrix_set_color(22, RGB_TEAL);//KC_T
+    rgb_matrix_set_color(15, RGB_BLUE);//KC_]
+    rgb_matrix_set_color(16, RGB_BLUE);//KC_[
+
+    rgb_matrix_set_color(33, RGB_GREEN);//KC_J
+    rgb_matrix_set_color(34, RGB_TEAL);//KC_H
+    rgb_matrix_set_color(35, RGB_TEAL);//KC_G
+    rgb_matrix_set_color(36, RGB_RED);//KC_F
+    rgb_matrix_set_color(29, RGB_MAGENTA);//KC_'
+
+    rgb_matrix_set_color(46, RGB_TEAL);//KC_N
+    rgb_matrix_set_color(47, RGB_TEAL);//KC_B
+
+
     for (uint8_t i = led_min; i <= led_max; i++) {
         if(layer_state_is(MAC_QWERTY)) { rgb_matrix_set_color(i, RGB_CORAL); }
         if(layer_state_is(WIN_QWERTY)) { rgb_matrix_set_color(i, RGB_GOLDENROD); }
-        if(layer_state_is(MAC_VIM) || layer_state_is(WIN_VIM)) { rgb_matrix_set_color(i, RGB_TEAL); }
+        if(layer_state_is(MAC_VIM) || layer_state_is(WIN_VIM)) { rgb_matrix_set_color(i, RGB_TURQUOISE); }
         //if(layer_state_is(MAC_VIM_VISUAL) || layer_state_is(WIN_VIM_VISUAL)) { rgb_matrix_set_color(i, RGB_YELLOW); }
         if(layer_state_is(GEN_FN)) { rgb_matrix_set_color(i, RGB_RED); }
     }
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+/* bool process_record_user(uint16_t keycode, keyrecord_t *record) { */
     //if(layer_state_is(MAC_VIM_VISUAL))
     //{
     //    mac_vim_visual_keymap(keycode,record);    
@@ -108,7 +128,5 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //{
     //    win_vim_visual_keymap(keycode,record);    
     //}
-        
-
-  return true;
-}; 
+  /* return true; */
+/* }; */ 
