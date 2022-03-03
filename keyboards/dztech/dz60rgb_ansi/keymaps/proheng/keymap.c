@@ -99,6 +99,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     rgb_matrix_set_color(22, RGB_TEAL);//KC_T
     rgb_matrix_set_color(15, RGB_BLUE);//KC_]
     rgb_matrix_set_color(16, RGB_BLUE);//KC_[
+    rgb_matrix_set_color(14, RGB_ORANGE);//KC_|
 
     rgb_matrix_set_color(33, RGB_GREEN);//KC_J
     rgb_matrix_set_color(34, RGB_TEAL);//KC_H
@@ -115,7 +116,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         if(layer_state_is(WIN_QWERTY)) { rgb_matrix_set_color(i, RGB_GOLDENROD); }
         if(layer_state_is(MAC_VIM) || layer_state_is(WIN_VIM)) { rgb_matrix_set_color(i, RGB_TURQUOISE); }
         //if(layer_state_is(MAC_VIM_VISUAL) || layer_state_is(WIN_VIM_VISUAL)) { rgb_matrix_set_color(i, RGB_YELLOW); }
-        if(layer_state_is(GEN_FN)) { rgb_matrix_set_color(i, RGB_YELLOW); }
+        if(layer_state_is(GEN_FN)) { rgb_matrix_set_color(i, RGB_RED); }
     }
 }
 
