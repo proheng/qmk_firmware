@@ -234,12 +234,10 @@ void cap_reset(qk_tap_dance_state_t *state, void *user_data) {
     tap_state.state = TD_NONE;
 }
 
-void lctl_finished(qk_tap_dance_state_t *state, void *user_data) {
+void rctl_finished(qk_tap_dance_state_t *state, void *user_data) {
     tap_state.state = cur_dance(state);
     switch (tap_state.state) {
-        case TD_SINGLE_TAP: PRESS(KC_GRV); break;
-        case TD_SINGLE_HOLD: break;
-        case TD_DOUBLE_TAP: 
+        case TD_SINGLE_TAP: 
             if(layer_state_is(MAC_QWERTY))
             {
                 CMD(KC_TAB);
@@ -248,6 +246,9 @@ void lctl_finished(qk_tap_dance_state_t *state, void *user_data) {
             {
                 ALT(KC_TAB);
             }
+            break;
+        case TD_SINGLE_HOLD: 
+        case TD_DOUBLE_TAP: 
         case TD_DOUBLE_HOLD: 
         case TD_DOUBLE_SINGLE_TAP: 
         case TD_NONE: 
@@ -258,9 +259,9 @@ void lctl_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void lctl_reset(qk_tap_dance_state_t *state, void *user_data) {
+void rctl_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
-        case TD_SINGLE_TAP: RELEASE(KC_GRV); break;
+        case TD_SINGLE_TAP: 
         case TD_SINGLE_HOLD: 
         case TD_DOUBLE_TAP: 
         case TD_DOUBLE_HOLD: 
