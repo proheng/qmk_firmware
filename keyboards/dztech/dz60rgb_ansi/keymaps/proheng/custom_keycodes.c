@@ -1,4 +1,3 @@
-
 enum custom_keycodes {
     VIM_Y = SAFE_RANGE,
     VIM_X,
@@ -12,3 +11,4 @@ enum custom_keycodes {
     F_SFT,
     J_SFT
 };
+

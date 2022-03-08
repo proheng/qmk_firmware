@@ -5,6 +5,8 @@
 #define PRESS(keycode) register_code16(keycode)
 #define RELEASE(keycode) unregister_code16(keycode)
 
+#define KC_CAD	LALT(LCTL(KC_DEL))
+
 void TAP(uint16_t keycode) {
     PRESS(keycode);
     RELEASE(keycode);
@@ -256,7 +258,7 @@ void rctl_finished(qk_tap_dance_state_t *state, void *user_data) {
         case TD_NONE: 
         case TD_UNKNOWN:
         case TD_TRIPLE_TAP:
-            tap_code16(KC_TAB);
+            tap_code16(KC_CAD);
             break;
         case TD_TRIPLE_HOLD:
             break;

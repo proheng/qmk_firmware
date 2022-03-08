@@ -10,6 +10,7 @@
 #include "mac_vim_keymap.c"
 #include "win_vim_keymap.c"
 
+
 // Tap dance enums
 enum {
     TD_CAP,
