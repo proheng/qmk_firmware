@@ -114,18 +114,6 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     }
 }
 
-/* bool process_record_user(uint16_t keycode, keyrecord_t *record) { */
-    //if(layer_state_is(MAC_VIM_VISUAL))
-    //{
-    //    mac_vim_visual_keymap(keycode,record);    
-    //}
-    //if(layer_state_is(WIN_VIM_VISUAL))
-    //{
-    //    win_vim_visual_keymap(keycode,record);    
-    //}
-  /* return true; */
-/* }; */ 
-
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -164,3 +152,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SFT_T(KC_A):
+            return TAPPING_TERM - 50;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
