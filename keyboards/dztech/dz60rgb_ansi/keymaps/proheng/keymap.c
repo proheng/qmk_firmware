@@ -28,16 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,  
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, 
         TD(TD_CAP),       LCTL_T(KC_A),     LALT_T(KC_S),     LGUI_T(KC_D),     LSFT_T(KC_F),     KC_G,    KC_H,    RSFT_T(KC_J),     RGUI_T(KC_K),    RALT_T(KC_L),    RCTL_T(KC_SCLN), KC_QUOT, KC_ENT,  
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,  
-        KC_LCTL, KC_LALT, KC_LGUI,    LT(MAC_VIM, KC_SPC),       TD(TD_FN),     KC_RGUI, KC_RALT, TD(TD_RCTL)
-    ),
-
-    // Mac Layuout
-	[MAC_QWERTY] = LAYOUT_60_ansi(
-        KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,  
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, 
-        TD(TD_CAP),       LCTL_T(KC_A),     LALT_T(KC_S),     LGUI_T(KC_D),     LSFT_T(KC_F),     KC_G,    KC_H,    RSFT_T(KC_J),     RGUI_T(KC_K),    RALT_T(KC_L),    RCTL_T(KC_SCLN), KC_QUOT, KC_ENT,  
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+        KC_LSFT, KC_Z,    LT(0,KC_X),    LT(0,KC_C),   LT(0,KC_V),    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,  
         KC_LCTL, KC_LALT, KC_LGUI,    LT(MAC_VIM, KC_SPC),       TD(TD_FN),     KC_RGUI, KC_RALT, TD(TD_RCTL)
     ),
     // Windows Layuout
@@ -53,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   LGUI(KC_LEFT),    LGUI(KC_RGHT),    KC_NO,   KC_NO,   KC_NO,  
         KC_TAB,  KC_NO,   LALT(KC_RGHT),    LALT(KC_RGHT),    KC_NO,   KC_NO,   LGUI(KC_C),       LGUI(KC_Z),       TO(MAC_QWERTY),   KC_ENT,  LGUI(KC_V),     KC_NO,   KC_NO,   KC_NO,  
         TD(TD_CAP),       KC_PGDN, KC_NO,   KC_BSPC, KC_PGUP, KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,   KC_NO,   KC_NO,  
-        KC_LSFT, KC_NO,   KC_DEL,  KC_NO,   KC_NO,        LALT(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, 
+        KC_LSFT, KC_NO,   LGUI(KC_X),  KC_NO,   KC_NO,        LALT(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, 
         KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO
     ),
     // Windows VIM Layuout
@@ -61,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_HOME, KC_END,  KC_NO,   KC_NO,   KC_NO,  
         KC_TAB,  KC_NO,   LCTL(KC_RGHT),    LCTL(KC_RGHT),    KC_NO,   KC_NO,   LCTL(KC_C),       LCTL(KC_Z),       TO(WIN_QWERTY),   KC_ENT,  LCTL(KC_V),     KC_NO,   KC_NO,   KC_NO,   
         TD(TD_CAP),       KC_PGDN, KC_NO,   KC_BSPC, KC_PGUP, KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_NO,   KC_NO,   KC_NO,  
-        KC_LSFT, KC_NO,   KC_DEL,  KC_NO,   KC_NO,        LCTL(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, 
+        KC_LSFT, KC_NO,   LCTL(KC_X),  KC_NO,   KC_NO,        LCTL(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, 
         KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO
     ),
     // MAC VIM VISUAL Layout
@@ -133,3 +124,42 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     //}
   /* return true; */
 /* }; */ 
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(0,KC_X):
+            if (!record->tap.count && record->event.pressed) {
+                if(layer_state_is(MAC_QWERTY)){ 
+                    tap_code16(LGUI(KC_X)); // Intercept hold function to send CMD-X
+                }
+                if(layer_state_is(WIN_QWERTY)){ 
+                    tap_code16(C(KC_X)); // Intercept hold function to send Ctrl-X
+                }
+            }
+            return true;             // Return true for normal processing of tap keycode
+        case LT(0,KC_C):
+            if (!record->tap.count && record->event.pressed) {
+                if(layer_state_is(MAC_QWERTY)){ 
+                    tap_code16(LGUI(KC_C)); // Intercept hold function to send CMD-C
+                }
+                if(layer_state_is(WIN_QWERTY)){ 
+                    tap_code16(C(KC_C)); // Intercept hold function to send Ctrl-C
+                }
+                return false;
+            }
+            return true;             // Return true for normal processing of tap keycode
+        case LT(0,KC_V):
+            if (!record->tap.count && record->event.pressed) {
+                if(layer_state_is(MAC_QWERTY)){ 
+                    tap_code16(LGUI(KC_V)); // Intercept hold function to send CMD-V
+                }
+                if(layer_state_is(WIN_QWERTY)){ 
+                    tap_code16(C(KC_V)); // Intercept hold function to send Ctrl-V
+                }
+                return false;
+            }
+            return true;             // Return true for normal processing of tap keycode
+    }
+    return true;
+}
