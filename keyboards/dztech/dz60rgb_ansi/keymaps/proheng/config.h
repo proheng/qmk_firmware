@@ -1,6 +1,6 @@
 /* #include "config_common.h" */
 /* #define COMBO_TERM 300 */
-#define TAPPING_TERM 300
+#define TAPPING_TERM 200
 #define IGNORE_MOD_TAP_INTERRUPT
 #define ONESHOT_TAP_TOGGLE 1
 #define ONESHOT_TIMEOUT 1500
