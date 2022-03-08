@@ -101,6 +101,8 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     rgb_matrix_set_color(16, RGB_BLUE);//KC_[
     rgb_matrix_set_color(14, RGB_ORANGE);//KC_|
 
+
+    rgb_matrix_set_color(40, RGB_PURPLE);//KC_TAB
     rgb_matrix_set_color(33, RGB_GREEN);//KC_J
     rgb_matrix_set_color(34, RGB_TEAL);//KC_H
     rgb_matrix_set_color(35, RGB_TEAL);//KC_G
