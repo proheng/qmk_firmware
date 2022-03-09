@@ -44,8 +44,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[MAC_VIM] = LAYOUT_60_ansi(
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   LGUI(KC_LEFT),    LGUI(KC_RGHT),    KC_NO,   KC_NO,   KC_NO,  
         KC_TAB,  KC_NO,   LALT(KC_RGHT),    LALT(KC_RGHT),    KC_NO,   KC_NO,   LGUI(KC_C),       LGUI(KC_Z),       TO(MAC_QWERTY),   KC_ENT,  LGUI(KC_V),     KC_NO,   KC_NO,   KC_NO,  
-        TD(TD_CAP),       KC_PGUP, KC_NO,   KC_BSPC, KC_PGDN, KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,   KC_NO,   KC_NO,  
-        KC_LSFT, KC_NO,   LGUI(KC_X),  KC_NO,   KC_NO,        LALT(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, 
+        TD(TD_CAP),       KC_NO, KC_NO,   KC_BSPC, KC_NO, KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,   KC_NO,   KC_NO,  
+        KC_LSFT, KC_NO,   LGUI(KC_X),  KC_NO,   KC_NO,        LALT(KC_LEFT),    KC_NO,   KC_PGDN,   KC_PGUP,   KC_NO,   KC_NO,   KC_RSFT, 
         KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO
     ),
     // Windows VIM Layuout
@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_HOME, KC_END,  KC_NO,   KC_NO,   KC_NO,  
         KC_TAB,  KC_NO,   LCTL(KC_RGHT),    LCTL(KC_RGHT),    KC_NO,   KC_NO,   LCTL(KC_C),       LCTL(KC_Z),       TO(WIN_QWERTY),   KC_ENT,  LCTL(KC_V),     KC_NO,   KC_NO,   KC_NO,   
         TD(TD_CAP),       _______, KC_NO,   KC_BSPC, _______, KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_NO,   KC_NO,   KC_NO,  
-        KC_LSFT, KC_NO,   LCTL(KC_X),  KC_NO,   KC_NO,        LCTL(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, 
+        KC_LSFT, KC_NO,   LCTL(KC_X),  KC_NO,   KC_NO,        LCTL(KC_LEFT),    KC_NO,   _______,   _______,   KC_NO,   KC_NO,   KC_RSFT, 
         KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO
     ),
     // MAC VIM VISUAL Layout
