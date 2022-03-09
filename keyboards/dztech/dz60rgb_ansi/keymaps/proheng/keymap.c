@@ -158,8 +158,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 /* uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) { */
 /*     switch (keycode) { */
-/*         case SFT_T(KC_A): */
-/*             return TAPPING_TERM - 50; */
+/*         case TD(TD_KC_1): */
+/*             return TAPPING_TERM - 100; */
 /*         default: */
 /*             return TAPPING_TERM; */
 /*     } */
