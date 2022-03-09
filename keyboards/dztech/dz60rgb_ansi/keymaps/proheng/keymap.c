@@ -16,17 +16,41 @@ enum {
     TD_CAP,
     TD_FN,
     TD_RCTL,
+    TD_KC_1,
+    TD_KC_2,
+    TD_KC_3,
+    TD_KC_4,
+    TD_KC_5,
+    TD_KC_6,
+    TD_KC_7,
+    TD_KC_8,
+    TD_KC_9,
+    TD_KC_10,
+    TD_KC_11,
+    TD_KC_12,
     SOME_OTHER_DANCE
 };
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cap_finished, cap_reset),
     [TD_FN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
     [TD_RCTL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rctl_finished, rctl_reset),
+    [TD_KC_1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_1_finished,  kc_1_reset),
+    [TD_KC_2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_2_finished,  kc_2_reset),
+    [TD_KC_3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_3_finished,  kc_3_reset),
+    [TD_KC_4] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_4_finished,  kc_4_reset),
+    [TD_KC_5] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_5_finished,  kc_5_reset),
+    [TD_KC_6] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_6_finished,  kc_6_reset),
+    [TD_KC_7] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_7_finished,  kc_7_reset),
+    [TD_KC_8] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_8_finished,  kc_8_reset),
+    [TD_KC_9] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_9_finished,  kc_9_reset),
+    [TD_KC_10] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_10_finished, kc_10_reset),
+    [TD_KC_11] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_11_finished, kc_11_reset),
+    [TD_KC_12] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_12_finished, kc_12_reset),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[MAC_QWERTY] = LAYOUT_60_ansi(
-        KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,  
+        KC_GRV,  TD(TD_KC_1),    TD(TD_KC_2),    TD(TD_KC_3),    TD(TD_KC_4),    TD(TD_KC_5),   TD(TD_KC_6),    TD(TD_KC_7),    TD(TD_KC_8),   TD(TD_KC_9),   TD(TD_KC_10),    TD(TD_KC_11), TD(TD_KC_12),  KC_BSPC,  
         KC_TAB,  LSG_T(KC_Q),    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, 
         TD(TD_CAP),       LCTL_T(KC_A),     LALT_T(KC_S),     LGUI_T(KC_D),     LSFT_T(KC_F),     KC_G,    KC_H,    RSFT_T(KC_J),     RGUI_T(KC_K),    RALT_T(KC_L),    RCTL_T(KC_SCLN), KC_QUOT, KC_ENT,  
         KC_LSFT, KC_Z,    LT(0,KC_X),    LT(0,KC_C),   LT(0,KC_V),    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,  
@@ -45,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   LGUI(KC_LEFT),    LGUI(KC_RGHT),    KC_NO,   KC_NO,   KC_NO,  
         KC_TAB,  KC_NO,   LALT(KC_RGHT),    LALT(KC_RGHT),    KC_NO,   KC_NO,   LGUI(KC_C),       LGUI(KC_Z),       TO(MAC_QWERTY),   KC_ENT,  LGUI(KC_V),     KC_NO,   KC_NO,   KC_NO,  
         TD(TD_CAP),       KC_NO, KC_NO,   KC_BSPC, KC_NO, KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,   KC_NO,   KC_NO,  
-        KC_LSFT, KC_NO,   LGUI(KC_X),  KC_NO,   KC_NO,        LALT(KC_LEFT),    KC_NO,   KC_PGDN,   KC_PGUP,   KC_NO,   KC_NO,   KC_RSFT, 
+        KC_LSFT, KC_NO,   KC_DEL,  KC_NO,   KC_NO,        LALT(KC_LEFT),    KC_NO,   KC_PGDN,   KC_PGUP,   KC_NO,   KC_NO,   KC_RSFT, 
         KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO
     ),
     // Windows VIM Layuout
@@ -53,27 +77,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_HOME, KC_END,  KC_NO,   KC_NO,   KC_NO,  
         KC_TAB,  KC_NO,   LCTL(KC_RGHT),    LCTL(KC_RGHT),    KC_NO,   KC_NO,   LCTL(KC_C),       LCTL(KC_Z),       TO(WIN_QWERTY),   KC_ENT,  LCTL(KC_V),     KC_NO,   KC_NO,   KC_NO,   
         TD(TD_CAP),       KC_NO, KC_NO,   KC_BSPC, KC_NO, KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_NO,   KC_NO,   KC_NO,  
-        KC_LSFT, KC_NO,   LCTL(KC_X),  KC_NO,   KC_NO,        LCTL(KC_LEFT),    KC_NO,   KC_PGDN,   KC_PGUP,   KC_NO,   KC_NO,   KC_RSFT, 
+        KC_LSFT, KC_NO,   KC_DEL,  KC_NO,   KC_NO,        LCTL(KC_LEFT),    KC_NO,   KC_PGDN,   KC_PGUP,   KC_NO,   KC_NO,   KC_RSFT, 
         KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO
     ),
-    // MAC VIM VISUAL Layout
-    // Every keystroke will be shifted to simulate selection in vim visual mode.
-	//[MAC_VIM_VISUAL] = LAYOUT_60_ansi(
-    //    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   LSG(KC_LEFT),     LSG(KC_RGHT),     KC_NO,   KC_NO,   KC_NO,   
-    //    KC_TAB,  KC_NO,   LSA(KC_RGHT),     LSA(KC_RGHT),     KC_NO,   KC_NO,   VIM_Y,   LGUI(KC_Z),       TO(MAC_QWERTY),   KC_ENT,  LSFT(KC_INS),     KC_NO,   KC_NO,   KC_NO,   
-    //    TO(MAC_VIM),      KC_NO,   KC_NO,   VIM_D,       KC_NO,   KC_NO,   LSFT(KC_LEFT),    LSFT(KC_DOWN),    LSFT(KC_UP),      LSFT(KC_RGHT),    KC_NO,   KC_NO,   KC_NO,  
-    //    KC_LSFT, KC_NO,   VIM_X,   KC_NO,   TO(MAC_VIM),      LSA(KC_LEFT),     KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT, 
-    //    KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO
-    //),
-    // WIN VIM VISUAL Layout
-    // Every keystroke will be shifted to simulate selection in vim visual mode.
-	//[WIN_VIM_VISUAL] = LAYOUT_60_ansi(
-    //    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   LCTL(KC_HOME),    LCTL(KC_END),     KC_NO,   KC_NO,   KC_NO,  
-    //    KC_TAB,  KC_NO,   LCTL(KC_RGHT),    LCTL(KC_RGHT),    KC_NO,   KC_NO,   VIM_Y,   LCTL(KC_Z),       TO(WIN_QWERTY),   KC_ENT,  LSFT(KC_INS),     KC_NO,   KC_NO,   KC_NO,  
-    //    TO(WIN_VIM),      KC_NO,   KC_NO,   VIM_D,      KC_NO,   KC_NO,   LSFT(KC_LEFT),    LSFT(KC_DOWN),    LSFT(KC_UP),      LSFT(KC_RGHT),    KC_NO,   KC_NO,   KC_NO, 
-    //    KC_LSFT, KC_NO,   VIM_X,   KC_NO,   TO(WIN_VIM),      LSFT(KC_LEFT),    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_RSFT,
-    //    KC_LCTL, KC_LALT, KC_NO,   KC_NO,   _______, KC_RALT, KC_RCTL, KC_NO
-    //),
 	[GEN_FN] = LAYOUT_60_ansi(
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,   KC_F11,  KC_F12,  _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
