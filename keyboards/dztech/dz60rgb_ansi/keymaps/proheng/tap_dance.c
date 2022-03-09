@@ -120,52 +120,54 @@ static td_tap_t tap_state = {
 /* ------------------------------------------------------------------------------------------------------- */
 /* These are the key specified handler */ 
 /* ------------------------------------------------------------------------------------------------------- */
-void kc_num_finished(int keycode, qk_tap_dance_state_t *state, void *user_data) {
-    tap_state.state = cur_dance(state);
-    switch (tap_state.state) {
-        case TD_SINGLE_TAP: tap_code16(keycode); break;
-        case TD_SINGLE_HOLD: set_oneshot_layer(GEN_FN, ONESHOT_START); break;
-        case TD_DOUBLE_TAP: 
-        case TD_DOUBLE_HOLD: 
-        case TD_DOUBLE_SINGLE_TAP:
-        case TD_TRIPLE_TAP: 
-        case TD_TRIPLE_HOLD: 
-        case TD_NONE: 
-        case TD_UNKNOWN: break;
-    }
-}
-void kc_num_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (tap_state.state) {
-        case TD_SINGLE_TAP: break;
-        case TD_SINGLE_HOLD: clear_oneshot_layer_state(ONESHOT_PRESSED); break;
-        case TD_DOUBLE_TAP: 
-        case TD_DOUBLE_HOLD: 
-        case TD_DOUBLE_SINGLE_TAP:
-        case TD_TRIPLE_TAP: 
-        case TD_TRIPLE_HOLD: 
-        case TD_NONE: 
-        case TD_UNKNOWN: break;
-    }
-    tap_state.state = TD_NONE;
-}
+/* void kc_num_finished(int keycode, qk_tap_dance_state_t *state, void *user_data) { */
+/*     tap_state.state = cur_dance(state); */
+/*     switch (tap_state.state) { */
+/*         case TD_SINGLE_TAP: tap_code16(keycode); break; */
+/*         case TD_SINGLE_HOLD: set_oneshot_layer(GEN_FN, ONESHOT_START); break; */
+/*         case TD_DOUBLE_TAP: */ 
+/*         case TD_DOUBLE_HOLD: */ 
+/*         case TD_DOUBLE_SINGLE_TAP: */
+/*         case TD_TRIPLE_TAP: */ 
+/*         case TD_TRIPLE_HOLD: */ 
+/*         case TD_NONE: */ 
+/*         case TD_UNKNOWN: break; */
+/*     } */
+/* } */
+/* void kc_num_reset(qk_tap_dance_state_t *state, void *user_data) { */
+/*     switch (tap_state.state) { */
+/*         case TD_SINGLE_TAP: break; */
+/*         case TD_SINGLE_HOLD: clear_oneshot_layer_state(ONESHOT_PRESSED); break; */
+/*         case TD_DOUBLE_TAP: */ 
+/*         case TD_DOUBLE_HOLD: */ 
+/*         case TD_DOUBLE_SINGLE_TAP: */
+/*         case TD_TRIPLE_TAP: */ 
+/*         case TD_TRIPLE_HOLD: */ 
+/*         case TD_NONE: */ 
+/*         case TD_UNKNOWN: break; */
+/*     } */
+/*     tap_state.state = TD_NONE; */
+/* } */
 
-void kc_1_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_1, state, user_data); }
-void kc_2_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_2, state, user_data); }
-void kc_3_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_3, state, user_data); }
-void kc_4_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_4, state, user_data); }
-void kc_5_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_5, state, user_data); }
-void kc_6_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_6, state, user_data); }
-void kc_7_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_7, state, user_data); }
-void kc_8_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_8, state, user_data); }
-void kc_9_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_9, state, user_data); }
-void kc_10_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_0, state, user_data); }
-void kc_11_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_MINS, state, user_data); }
-void kc_12_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_EQL, state, user_data); }
+/* void kc_1_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_1, state, user_data); } */
+/* void kc_2_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_2, state, user_data); } */
+/* void kc_3_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_3, state, user_data); } */
+/* void kc_4_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_4, state, user_data); } */
+/* void kc_5_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_5, state, user_data); } */
+/* void kc_6_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_6, state, user_data); } */
+/* void kc_7_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_7, state, user_data); } */
+/* void kc_8_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_8, state, user_data); } */
+/* void kc_9_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_9, state, user_data); } */
+/* void kc_10_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_0, state, user_data); } */
+/* void kc_11_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_MINS, state, user_data); } */
+/* void kc_12_finished(qk_tap_dance_state_t *state, void *user_data) { kc_num_finished(KC_EQL, state, user_data); } */
 
 void fn_finished(qk_tap_dance_state_t *state, void *user_data) {
     tap_state.state = cur_dance(state);
     switch (tap_state.state) {
         case TD_SINGLE_TAP: 
+            set_oneshot_layer(GEN_FN, ONESHOT_START); break;
+        case TD_SINGLE_HOLD: 
             if(layer_state_is(MAC_QWERTY))
             {
                 layer_move(WIN_QWERTY);
@@ -175,12 +177,11 @@ void fn_finished(qk_tap_dance_state_t *state, void *user_data) {
                 layer_move(MAC_QWERTY);
             }
             break;
-        case TD_SINGLE_HOLD: 
         case TD_DOUBLE_TAP: 
-        case TD_DOUBLE_HOLD: 
             reset_keyboard();
             reset_tap_dance(state);
             break;
+        case TD_DOUBLE_HOLD: 
         case TD_DOUBLE_SINGLE_TAP: 
         case TD_NONE: 
         case TD_UNKNOWN:
@@ -193,7 +194,7 @@ void fn_finished(qk_tap_dance_state_t *state, void *user_data) {
 void fn_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
         case TD_SINGLE_TAP: 
-            /* clear_oneshot_layer_state(ONESHOT_PRESSED); break; */
+            clear_oneshot_layer_state(ONESHOT_PRESSED); break;
         case TD_SINGLE_HOLD: 
         case TD_DOUBLE_TAP: 
         case TD_DOUBLE_HOLD: 
