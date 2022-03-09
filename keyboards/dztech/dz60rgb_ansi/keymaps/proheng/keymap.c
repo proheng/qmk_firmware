@@ -5,10 +5,10 @@
 #include QMK_KEYBOARD_H
 
 
-#include "custom_keycodes.c"
+/* #include "custom_keycodes.c" */
 #include "tap_dance.c"
-#include "mac_vim_keymap.c"
-#include "win_vim_keymap.c"
+/* #include "mac_vim_keymap.c" */
+/* #include "win_vim_keymap.c" */
 
 
 // Tap dance enums
@@ -94,12 +94,16 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     rgb_matrix_set_color(2, RGB_GREEN);//KC_-
     rgb_matrix_set_color(1, RGB_GREEN);//KC_=
 
+    rgb_matrix_set_color(26, RGB_ORANGE);//KC_Q
+
     rgb_matrix_set_color(21, RGB_TEAL);//KC_Y
     rgb_matrix_set_color(22, RGB_TEAL);//KC_T
     rgb_matrix_set_color(15, RGB_BLUE);//KC_]
     rgb_matrix_set_color(16, RGB_BLUE);//KC_[
     rgb_matrix_set_color(14, RGB_ORANGE);//KC_|
 
+
+    rgb_matrix_set_color(40, RGB_PURPLE);//KC_TAB
     rgb_matrix_set_color(33, RGB_GREEN);//KC_J
     rgb_matrix_set_color(34, RGB_TEAL);//KC_H
     rgb_matrix_set_color(35, RGB_TEAL);//KC_G
