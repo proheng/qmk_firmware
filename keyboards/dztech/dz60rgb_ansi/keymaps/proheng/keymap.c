@@ -27,25 +27,24 @@ enum {
     TD_KC_9,
     TD_KC_10,
     TD_KC_11,
-    TD_KC_12,
-    SOME_OTHER_DANCE
+    TD_KC_12
 };
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cap_finished, cap_reset),
     [TD_FN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
     [TD_RCTL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rctl_finished, rctl_reset),
-    [TD_KC_1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_1_finished,  kc_1_reset),
-    [TD_KC_2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_2_finished,  kc_2_reset),
-    [TD_KC_3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_3_finished,  kc_3_reset),
-    [TD_KC_4] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_4_finished,  kc_4_reset),
-    [TD_KC_5] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_5_finished,  kc_5_reset),
-    [TD_KC_6] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_6_finished,  kc_6_reset),
-    [TD_KC_7] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_7_finished,  kc_7_reset),
-    [TD_KC_8] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_8_finished,  kc_8_reset),
-    [TD_KC_9] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_9_finished,  kc_9_reset),
-    [TD_KC_10] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_10_finished, kc_10_reset),
-    [TD_KC_11] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_11_finished, kc_11_reset),
-    [TD_KC_12] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_12_finished, kc_12_reset),
+    [TD_KC_1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_1_finished,  kc_num_reset),
+    [TD_KC_2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_2_finished,  kc_num_reset),
+    [TD_KC_3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_3_finished,  kc_num_reset),
+    [TD_KC_4] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_4_finished,  kc_num_reset),
+    [TD_KC_5] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_5_finished,  kc_num_reset),
+    [TD_KC_6] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_6_finished,  kc_num_reset),
+    [TD_KC_7] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_7_finished,  kc_num_reset),
+    [TD_KC_8] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_8_finished,  kc_num_reset),
+    [TD_KC_9] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_9_finished,  kc_num_reset),
+    [TD_KC_10] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_10_finished, kc_num_reset),
+    [TD_KC_11] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_11_finished, kc_num_reset),
+    [TD_KC_12] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_12_finished, kc_num_reset),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -115,7 +114,6 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         if(layer_state_is(MAC_QWERTY)) { rgb_matrix_set_color(i, RGB_CORAL); }
         if(layer_state_is(WIN_QWERTY)) { rgb_matrix_set_color(i, RGB_GOLDENROD); }
         if(layer_state_is(MAC_VIM) || layer_state_is(WIN_VIM)) { rgb_matrix_set_color(i, RGB_TURQUOISE); }
-        //if(layer_state_is(MAC_VIM_VISUAL) || layer_state_is(WIN_VIM_VISUAL)) { rgb_matrix_set_color(i, RGB_YELLOW); }
         if(layer_state_is(GEN_FN)) { rgb_matrix_set_color(i, RGB_RED); }
     }
 }
@@ -158,12 +156,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case SFT_T(KC_A):
-            return TAPPING_TERM - 50;
-        default:
-            return TAPPING_TERM;
-    }
-}
+/* uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) { */
+/*     switch (keycode) { */
+/*         case SFT_T(KC_A): */
+/*             return TAPPING_TERM - 50; */
+/*         default: */
+/*             return TAPPING_TERM; */
+/*     } */
+/* } */
 
