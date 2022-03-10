@@ -4,11 +4,7 @@
 #include "version.h"
 #include QMK_KEYBOARD_H
 
-
-/* #include "custom_keycodes.c" */
 #include "tap_dance.c"
-/* #include "mac_vim_keymap.c" */
-/* #include "win_vim_keymap.c" */
 
 
 // Tap dance enums
@@ -16,35 +12,11 @@ enum {
     TD_CAP,
     TD_FN,
     TD_RCTL,
-    TD_KC_1,
-    TD_KC_2,
-    TD_KC_3,
-    TD_KC_4,
-    TD_KC_5,
-    TD_KC_6,
-    TD_KC_7,
-    TD_KC_8,
-    TD_KC_9,
-    TD_KC_10,
-    TD_KC_11,
-    TD_KC_12
 };
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cap_finished, cap_reset),
     [TD_FN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
     [TD_RCTL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rctl_finished, rctl_reset),
-    [TD_KC_1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_1_finished,  kc_num_reset),
-    [TD_KC_2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_2_finished,  kc_num_reset),
-    [TD_KC_3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_3_finished,  kc_num_reset),
-    [TD_KC_4] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_4_finished,  kc_num_reset),
-    [TD_KC_5] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_5_finished,  kc_num_reset),
-    [TD_KC_6] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_6_finished,  kc_num_reset),
-    [TD_KC_7] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_7_finished,  kc_num_reset),
-    [TD_KC_8] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_8_finished,  kc_num_reset),
-    [TD_KC_9] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,  kc_9_finished,  kc_num_reset),
-    [TD_KC_10] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_10_finished, kc_num_reset),
-    [TD_KC_11] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_11_finished, kc_num_reset),
-    [TD_KC_12] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, kc_12_finished, kc_num_reset),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
