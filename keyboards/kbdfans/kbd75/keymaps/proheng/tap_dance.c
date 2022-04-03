@@ -136,6 +136,7 @@ void fn_finished(qk_tap_dance_state_t *state, void *user_data) {
             }
             break;
         case TD_DOUBLE_TAP: 
+            break;
         case TD_DOUBLE_HOLD: 
             reset_keyboard();
             reset_tap_dance(state);
