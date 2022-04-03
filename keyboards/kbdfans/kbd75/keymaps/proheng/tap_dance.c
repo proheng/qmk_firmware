@@ -239,49 +239,24 @@ void cap_reset(qk_tap_dance_state_t *state, void *user_data) {
 void KC_S_finished(qk_tap_dance_state_t *state, void *user_data) {
     tap_state.state = cur_dance(state);
     switch (tap_state.state) {
-        case TD_SINGLE_TAP: 
-            TAP(KC_S); break;
-        case TD_SINGLE_HOLD: 
-            PRESS(KC_LALT);
-            break;
+        case TD_SINGLE_TAP: TAP(KC_S); break;
+        case TD_SINGLE_HOLD: PRESS(KC_LALT); break;
         case TD_DOUBLE_TAP: 
-            if(layer_state_is(MAC_QWERTY))
-            {
-                CMD(KC_S);
-                break;
-            }
-            if(layer_state_is(WIN_QWERTY))
-            {
-                CTRL(KC_S);
-                break;
-            }
+            if(layer_state_is(MAC_QWERTY)) { CMD(KC_S); }
+            if(layer_state_is(WIN_QWERTY)) { CTRL(KC_S); }
             break;
-        case TD_DOUBLE_HOLD: 
-        // Last case is for fast typing. Assuming your key is `f`:
-        // For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
-        // In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
-        case TD_DOUBLE_SINGLE_TAP: //tap_code(KC_X); register_code(KC_X); // I don't need them.
-        case TD_NONE: 
-        case TD_UNKNOWN:
-        case TD_TRIPLE_TAP:
-        case TD_TRIPLE_HOLD:
+        default:
             break;
     }
 }
 
 void KC_S_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
-        case TD_SINGLE_TAP:  
+        case TD_SINGLE_TAP:  break;
         case TD_SINGLE_HOLD: 
                 RELEASE(KC_LALT);
                 break;
-        case TD_DOUBLE_TAP: 
-        case TD_DOUBLE_HOLD: 
-        case TD_DOUBLE_SINGLE_TAP:// unregister_code(KC_X); break; // I don't need them.
-        case TD_NONE: 
-        case TD_UNKNOWN:
-        case TD_TRIPLE_TAP:
-        case TD_TRIPLE_HOLD:
+        default:
             break;
     }
     tap_state.state = TD_NONE;
