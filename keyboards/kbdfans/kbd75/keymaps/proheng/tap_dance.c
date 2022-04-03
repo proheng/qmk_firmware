@@ -261,27 +261,3 @@ void KC_S_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
     tap_state.state = TD_NONE;
 }
-void KC_J_finished(qk_tap_dance_state_t *state, void *user_data) {
-    tap_state.state = cur_dance(state);
-    switch (tap_state.state) {
-        case TD_SINGLE_TAP: TAP(KC_J); break;
-        case TD_SINGLE_HOLD: PRESS(KC_RSFT); break;
-        case TD_DOUBLE_TAP: 
-            TAP(KC_ESC);
-            break;
-        default:
-            break;
-    }
-}
-
-void KC_J_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (tap_state.state) {
-        case TD_SINGLE_TAP:  break;
-        case TD_SINGLE_HOLD: 
-                RELEASE(KC_RSFT);
-                break;
-        default:
-            break;
-    }
-    tap_state.state = TD_NONE;
-}

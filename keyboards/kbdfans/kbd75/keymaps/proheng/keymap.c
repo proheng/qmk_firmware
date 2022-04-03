@@ -23,8 +23,7 @@ enum {
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cap_finished, cap_reset),
     [TD_FN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
-    [TD_KC_S] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, KC_S_finished, KC_S_reset),
-    [TD_KC_J] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, KC_J_finished, KC_J_reset)
+    [TD_KC_S] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, KC_S_finished, KC_S_reset)
 };
  
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
