@@ -1,11 +1,12 @@
 #include QMK_KEYBOARD_H
+#include "tap_dance.c"
 
 enum layer_number {
   _QWERTY = 0,
-  _VIM,
-  _LOWER,
-  _RAISE,
-  _ADJUST,
+  _VIM = 1,
+  _LOWER = 2,
+  _RAISE = 3,
+  _ADJUST = 4,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -15,20 +16,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  =   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | LCTL |  A   |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |RSFT J|RGUI K|RALT L|RCTL ;|  '   |
+ * |TD_CAP|   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |RSFT J|RGUI K|RALT L|RCTL ;|  '   |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
  * | LSFT |   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  | RSFT | 
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | LAlt | LGUI |Space | /BackSP /       \  Space \  | BackSP  |RGUI  |ENT |
+ *                   | LAlt | LGUI | Space |/ ENT   /       \  ENT \| BackSP  |RGUI  |TD_CAD |
  *                   `-----------------------------'        '------''--------------------'
  */
 
  [_QWERTY] = LAYOUT(
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_EQL,
-  KC_LCTL,  KC_A,   KC_S,    KC_D,    KC_F, KC_G,            KC_H,    RSFT_T(KC_J),    RGUI_T(KC_K), RALT_T(KC_L), RCTL_T(KC_SCLN), KC_QUOT,
+  TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,            KC_H,    RSFT_T(KC_J),    RGUI_T(KC_K), RALT_T(KC_L), RCTL_T(KC_SCLN), KC_QUOT,
   KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,            KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                   KC_LALT, KC_LGUI, LT(_VIM, KC_SPC),KC_ESC,         KC_ENT, LT(_VIM, KC_BSPC), KC_NO, KC_RGUI 
+                   KC_LALT, KC_LGUI, LT(_VIM, KC_SPC),KC_ENT,         KC_ENT, LT(_VIM, KC_BSPC), KC_RGUI, TD(TD_CAD)  
 ),
 /* _VIM
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -172,28 +173,84 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * The clockwise parameter tells you the direction of the encoder. It'll be
  * true when you turned the encoder clockwise, and false otherwise.
  */
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
+bool is_ctrl_tab_active = false;
+uint16_t ctrl_tab_timer = 0;
 bool encoder_update_user(uint8_t index, bool clockwise) {
-  /* With an if statement we can check which encoder was turned. */
-  if (index == 0) { /* First encoder */
-    /* And with another if statement we can check the direction. */
+  /* Windows Movement */
+  if(index == 0)  {
     if (clockwise) {
-      /* This is where the actual magic happens: this bit of code taps on the
-         Page Down key. You can do anything QMK alows you to do here.
-         You'll want to replace these lines with the things you want your
-         encoders to do. */
-      tap_code(KC_PGDN);
+        if (!is_alt_tab_active) {
+            is_alt_tab_active = true;
+            register_code(KC_LALT);
+        }
+        alt_tab_timer = timer_read();
+        tap_code16(KC_TAB);
     } else {
-      /* And likewise for the other direction, this time Page Down is pressed. */
-      tap_code(KC_PGUP);
+        if (!is_alt_tab_active) {
+            is_alt_tab_active = true;
+            register_code(KC_LALT);
+        }
+        alt_tab_timer = timer_read();
+        tap_code16(S(KC_TAB));
     }
-  /* You can copy the code and change the index for every encoder you have. Most
-     keyboards will only have two, so this piece of code will suffice. */
-  } else if (index == 1) { /* Second encoder */
+  }
+
+  if(index==1){
     if (clockwise) {
-      tap_code(KC_UP);
+        if (!is_ctrl_tab_active) {
+            is_ctrl_tab_active = true;
+            register_code(KC_LCTL);
+        }
+        ctrl_tab_timer = timer_read();
+        tap_code16(KC_TAB);
     } else {
-      tap_code(KC_DOWN);
+        if (!is_ctrl_tab_active) {
+            is_ctrl_tab_active = true;
+            register_code(KC_LCTL);
+        }
+        ctrl_tab_timer = timer_read();
+        tap_code16(S(KC_TAB));
     }
   }
   return false;
+
+  /* With an if statement we can check which encoder was turned. */
+  /* if (index == 0) { /1* First encoder *1/ */
+  /*   /1* And with another if statement we can check the direction. *1/ */
+  /*   if (clockwise) { */
+  /*     /1* This is where the actual magic happens: this bit of code taps on the */
+  /*        Page Down key. You can do anything QMK alows you to do here. */
+  /*        You'll want to replace these lines with the things you want your */
+  /*        encoders to do. *1/ */
+  /*     tap_code(KC_PGDN); */
+  /*   } else { */
+  /*     /1* And likewise for the other direction, this time Page Down is pressed. *1/ */
+  /*     tap_code(KC_PGUP); */
+  /*   } */
+  /* /1* You can copy the code and change the index for every encoder you have. Most */
+  /*    keyboards will only have two, so this piece of code will suffice. *1/ */
+  /* } else if (index == 1) { /1* Second encoder *1/ */
+  /*   if (clockwise) { */
+  /*     tap_code(KC_UP); */
+  /*   } else { */
+  /*     tap_code(KC_DOWN); */
+  /*   } */
+  /* } */
+  /* return false; */
+}
+void matrix_scan_user(void) {
+  if (is_alt_tab_active) {
+    if (timer_elapsed(alt_tab_timer) > 1250) {
+      unregister_code(KC_LALT);
+      is_alt_tab_active = false;
+    }
+  }
+  if (is_ctrl_tab_active) {
+    if (timer_elapsed(ctrl_tab_timer) > 1250) {
+      unregister_code(KC_LCTL);
+      is_ctrl_tab_active = false;
+    }
+  }
 }

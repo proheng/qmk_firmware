@@ -10,6 +10,7 @@ RGBLIGHT_ENABLE = no       # Enable WS2812 RGB underlight.
 SWAP_HANDS_ENABLE = no      # Enable one-hand typing
 OLED_ENABLE=yes     # OLED display
 ENCODER_ENABLE=yes
+TAP_DANCE_ENABLE = yes
 
 
 # If you want to change the display of OLED, you need to change here
