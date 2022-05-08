@@ -26,10 +26,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-#define TAPPING_TERM_PER_KEY
-#define TAPPING_TERM 200
 
 #define ENCODERS_PAD_A { F4 }
 #define ENCODERS_PAD_B { F5 }
 #define ENCODERS_PAD_A_RIGHT { F5 }
 #define ENCODERS_PAD_B_RIGHT { F4 }
+
+#define TAPPING_TERM_PER_KEY
+#define TAPPING_TERM 200
+#define TAPPING_TERM_PER_KEY
+#define IGNORE_MOD_TAP_INTERRUPT
+#define ONESHOT_TAP_TOGGLE 1
+#define ONESHOT_TIMEOUT 1500

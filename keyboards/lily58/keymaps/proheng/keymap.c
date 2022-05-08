@@ -118,10 +118,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 };
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
-
 //SSD1306 OLED update loop, make sure to enable OLED_ENABLE=yes in rules.mk
 #ifdef OLED_ENABLE
 
@@ -134,32 +130,35 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 // When you add source files to SRC in rules.mk, you can use functions.
 const char *read_layer_state(void);
 const char *read_logo(void);
-void set_keylog(uint16_t keycode, keyrecord_t *record);
-const char *read_keylog(void);
-const char *read_keylogs(void);
-
-const char *read_mode_icon(bool swap);
-const char *read_host_led_state(void);
-void set_timelog(void);
-const char *read_timelog(void);
 
 bool oled_task_user(void) {
   if (is_keyboard_master()) {
     // If you want to change the display of OLED, you need to change here
-    oled_write_ln(read_layer_state(), false);
+    oled_write_P(PSTR("REX :) "), false);
+
+    switch (get_highest_layer(layer_state)) {
+        case _QWERTY:
+            oled_write_P(PSTR("Default\n"), false);
+            break;
+        case _VIM:
+            oled_write_P(PSTR("VIM\n"), false);
+            break;
+        case _LOWER:
+            oled_write_P(PSTR("LOWER\n"), false);
+            break;
+        default:
+            // Or use the write_ln shortcut over adding '\n' to the end of your string
+            oled_write_ln_P(PSTR("Undefined"), false);
+    }
   } else {
     oled_write(read_logo(), false);
   }
-    return false;
+  return false;
 }
 #endif // OLED_ENABLE
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
-#ifdef OLED_ENABLE
-    set_keylog(keycode, record);
-#endif
-    set_timelog();
   }
   return true;
 }
@@ -216,29 +215,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
   }
   return false;
 
-  /* With an if statement we can check which encoder was turned. */
-  /* if (index == 0) { /1* First encoder *1/ */
-  /*   /1* And with another if statement we can check the direction. *1/ */
-  /*   if (clockwise) { */
-  /*     /1* This is where the actual magic happens: this bit of code taps on the */
-  /*        Page Down key. You can do anything QMK alows you to do here. */
-  /*        You'll want to replace these lines with the things you want your */
-  /*        encoders to do. *1/ */
-  /*     tap_code(KC_PGDN); */
-  /*   } else { */
-  /*     /1* And likewise for the other direction, this time Page Down is pressed. *1/ */
-  /*     tap_code(KC_PGUP); */
-  /*   } */
-  /* /1* You can copy the code and change the index for every encoder you have. Most */
-  /*    keyboards will only have two, so this piece of code will suffice. *1/ */
-  /* } else if (index == 1) { /1* Second encoder *1/ */
-  /*   if (clockwise) { */
-  /*     tap_code(KC_UP); */
-  /*   } else { */
-  /*     tap_code(KC_DOWN); */
-  /*   } */
-  /* } */
-  /* return false; */
 }
 void matrix_scan_user(void) {
   if (is_alt_tab_active) {
