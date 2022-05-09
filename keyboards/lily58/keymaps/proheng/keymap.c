@@ -9,6 +9,14 @@ enum layer_number {
   _ADJUST = 4,
 };
 
+enum my_keycodes {
+    LEFT_KNOB = SAFE_RANGE,
+    RIGHT_KNOB
+};
+
+uint16_t left_knob_step = 0;
+uint16_t right_knob_step = 0;
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* QWERTY
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -17,7 +25,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  =   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |TD_CAP|   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |RSFT J|RGUI K|RALT L|RCTL ;|  '   |
- * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
+ * |------+------+------+------+------+------| L_KNOB|    |R_KNOB |------+------+------+------+------+------|
  * | LSFT |   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  | RSFT | 
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   | LAlt | LGUI | Space |/ ENT   /       \  ENT \| BackSP  |RGUI  |TD_CAD |
@@ -28,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,            KC_H,    RSFT_T(KC_J),    RGUI_T(KC_K), RALT_T(KC_L), RCTL_T(KC_SCLN), KC_QUOT,
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,            KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
+  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
                    KC_LALT, KC_LGUI, LT(_VIM, KC_SPC),KC_ENT,         KC_ENT, LT(_VIM, KC_BSPC), KC_RGUI, TD(TD_CAD)  
 ),
 /* _VIM
@@ -131,26 +139,34 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 const char *read_layer_state(void);
 const char *read_logo(void);
 
-bool oled_task_user(void) {
+bool oled_task_kb(void) {
   if (is_keyboard_master()) {
-    // If you want to change the display of OLED, you need to change here
-    oled_write_P(PSTR("REX :) "), false);
+        // If you want to change the display of OLED, you need to change here
+        /* oled_write_P(PSTR("REX :) "), false); */
 
-    switch (get_highest_layer(layer_state)) {
-        case _QWERTY:
-            oled_write_P(PSTR("Default\n"), false);
-            break;
-        case _VIM:
-            oled_write_P(PSTR("VIM\n"), false);
-            break;
-        case _LOWER:
-            oled_write_P(PSTR("LOWER\n"), false);
-            break;
-        default:
-            // Or use the write_ln shortcut over adding '\n' to the end of your string
-            oled_write_ln_P(PSTR("Undefined"), false);
+    /* switch (get_highest_layer(layer_state)) { */
+    /*     case _QWERTY: */
+    /*         oled_write_P(PSTR("Default\n"), false); */
+    /*         break; */
+    /*     case _VIM: */
+    /*         oled_write_P(PSTR("VIM\n"), false); */
+    /*         break; */
+    /*     case _LOWER: */
+    /*         oled_write_P(PSTR("LOWER\n"), false); */
+    /*         break; */
+    /*     default: */
+    /*         // Or use the write_ln shortcut over adding '\n' to the end of your string */
+    /*         oled_write_ln_P(PSTR("Undefined"), false); */
+    /* } */
+    switch(left_knob_step%2){
+      case 0: oled_write_ln_P(PSTR("Windows Movement"), false);break;
+      case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break;
     }
   } else {
+    switch(right_knob_step%2){
+      case 0: oled_write_ln_P(PSTR("Windows Movement"), false);break;
+      case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break;
+    }
     oled_write(read_logo(), false);
   }
   return false;
@@ -158,9 +174,20 @@ bool oled_task_user(void) {
 #endif // OLED_ENABLE
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-  }
-  return true;
+    switch(keycode){
+        case LEFT_KNOB:
+          if (record->event.pressed) {
+            left_knob_step = left_knob_step + 1;
+          }
+          return true;
+        case RIGHT_KNOB:
+          if (record->event.pressed) {
+            right_knob_step = right_knob_step + 1;
+          }
+          return true;
+        default:
+          return true;
+    }
 }
 
 /* The encoder_update_user is a function.
@@ -176,27 +203,26 @@ bool is_alt_tab_active = false;
 uint16_t alt_tab_timer = 0;
 bool is_ctrl_tab_active = false;
 uint16_t ctrl_tab_timer = 0;
-bool encoder_update_user(uint8_t index, bool clockwise) {
-  /* Windows Movement */
-  if(index == 0)  {
-    if (clockwise) {
-        if (!is_alt_tab_active) {
-            is_alt_tab_active = true;
-            register_code(KC_LALT);
-        }
-        alt_tab_timer = timer_read();
-        tap_code16(KC_TAB);
-    } else {
-        if (!is_alt_tab_active) {
-            is_alt_tab_active = true;
-            register_code(KC_LALT);
-        }
-        alt_tab_timer = timer_read();
-        tap_code16(S(KC_TAB));
-    }
-  }
 
-  if(index==1){
+void knob_windows_movement(bool clockwise){
+    if (clockwise) {
+        if (!is_alt_tab_active) {
+            is_alt_tab_active = true;
+            register_code(KC_LALT);
+        }
+        alt_tab_timer = timer_read();
+        tap_code16(KC_TAB);
+    } else {
+        if (!is_alt_tab_active) {
+            is_alt_tab_active = true;
+            register_code(KC_LALT);
+        }
+        alt_tab_timer = timer_read();
+        tap_code16(S(KC_TAB));
+    }
+}
+
+void knob_tab_movement(bool clockwise){
     if (clockwise) {
         if (!is_ctrl_tab_active) {
             is_ctrl_tab_active = true;
@@ -212,7 +238,26 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         ctrl_tab_timer = timer_read();
         tap_code16(S(KC_TAB));
     }
-  }
+
+}
+
+void knob_action_switcher(uint8_t index, bool clockwise){
+    if(index==0){
+        switch(left_knob_step%2){
+            case 0: knob_windows_movement(clockwise);break;
+            case 1: knob_tab_movement(clockwise);break;
+        }
+    }
+    if(index==1){
+        switch(right_knob_step%2){
+            case 0: knob_windows_movement(clockwise);break;
+            case 1: knob_tab_movement(clockwise);break;
+        }
+    }
+}
+
+bool encoder_update_user(uint8_t index, bool clockwise) {
+  knob_action_switcher(index,clockwise);
   return false;
 
 }
