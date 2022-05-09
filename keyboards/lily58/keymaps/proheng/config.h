@@ -40,5 +40,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ONESHOT_TIMEOUT 1500
 
 #define SPLIT_LAYER_STATE_ENABLE
-#define SPLIT_OLED_ENABLE
 
