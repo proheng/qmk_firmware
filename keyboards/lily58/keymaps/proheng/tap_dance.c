@@ -252,10 +252,14 @@ void cap_reset(qk_tap_dance_state_t *state, void *user_data) {
 
 enum {
     TD_CAD = 0,
-    TD_CAP
+    TD_CAP = 1,
+    TD_KC_LBRC = 2,
+    TD_KC_RBRC = 3
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAD] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, cad_finished, cad_reset),
-    [TD_CAP] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, cap_finished, cap_reset)
+    [TD_CAP] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, cap_finished, cap_reset),
+    [TD_KC_LBRC] = ACTION_TAP_DANCE_DOUBLE(KC_LBRC,S(KC_LBRC)),
+    [TD_KC_RBRC] = ACTION_TAP_DANCE_DOUBLE(KC_RBRC,S(KC_RBRC))
 };
