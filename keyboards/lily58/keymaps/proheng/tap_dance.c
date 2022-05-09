@@ -232,6 +232,7 @@ void cap_finished(qk_tap_dance_state_t *state, void *user_data) {
         case TD_SINGLE_TAP: 
             TAP(KC_ESC); break;
         case TD_SINGLE_HOLD: 
+            oled_write_P(PSTR("CTRL HOLDED\n"), false);
             PRESS(KC_LCTL); break;
         default:
             break;
@@ -241,6 +242,7 @@ void cap_finished(qk_tap_dance_state_t *state, void *user_data) {
 void cap_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
         case TD_SINGLE_HOLD: 
+            oled_clear();
             RELEASE(KC_LCTL);
             break;
         default:
