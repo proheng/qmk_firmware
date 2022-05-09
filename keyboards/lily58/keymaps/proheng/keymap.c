@@ -141,9 +141,10 @@ const char *read_logo(void);
 
 bool oled_task_kb(void) {
   if (is_keyboard_master()) {
-    switch(left_knob_step%2){
+    switch(left_knob_step%3){
       case 0: oled_write_ln_P(PSTR("Windows Movement"), false);break;
       case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break;
+      case 2: oled_write_ln_P(PSTR("Tabbing"), false);break;
     }
   } else {
     /* switch(right_knob_step%2){ */
@@ -238,14 +239,29 @@ void knob_tab_movement(bool clockwise){
         ctrl_tab_timer = timer_read();
         tap_code16(S(KC_TAB));
     }
-
+}
+void knob_tabbing(bool clockwise){
+    if (clockwise) {
+        if (!is_ctrl_tab_active) {
+            is_ctrl_tab_active = true;
+        }
+        ctrl_tab_timer = timer_read();
+        tap_code16(KC_TAB);
+    } else {
+        if (!is_ctrl_tab_active) {
+            is_ctrl_tab_active = true;
+        }
+        ctrl_tab_timer = timer_read();
+        tap_code16(S(KC_TAB));
+    }
 }
 
 void knob_action_switcher(uint8_t index, bool clockwise){
     if(index==0){
-        switch(left_knob_step%2){
+        switch(left_knob_step%3){
             case 0: knob_windows_movement(clockwise);break;
             case 1: knob_tab_movement(clockwise);break;
+            case 2: knob_tabbing(clockwise);break;
         }
     }
     if(index==1){
