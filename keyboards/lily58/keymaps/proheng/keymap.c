@@ -141,23 +141,6 @@ const char *read_logo(void);
 
 bool oled_task_kb(void) {
   if (is_keyboard_master()) {
-        // If you want to change the display of OLED, you need to change here
-        /* oled_write_P(PSTR("REX :) "), false); */
-
-    /* switch (get_highest_layer(layer_state)) { */
-    /*     case _QWERTY: */
-    /*         oled_write_P(PSTR("Default\n"), false); */
-    /*         break; */
-    /*     case _VIM: */
-    /*         oled_write_P(PSTR("VIM\n"), false); */
-    /*         break; */
-    /*     case _LOWER: */
-    /*         oled_write_P(PSTR("LOWER\n"), false); */
-    /*         break; */
-    /*     default: */
-    /*         // Or use the write_ln shortcut over adding '\n' to the end of your string */
-    /*         oled_write_ln_P(PSTR("Undefined"), false); */
-    /* } */
     switch(left_knob_step%2){
       case 0: oled_write_ln_P(PSTR("Windows Movement"), false);break;
       case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break;
@@ -167,8 +150,24 @@ bool oled_task_kb(void) {
       case 0: oled_write_ln_P(PSTR("Windows Movement"), false);break;
       case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break;
     }
-    oled_write(read_logo(), false);
   }
+        // If you want to change the display of OLED, you need to change here
+        /* oled_write_P(PSTR("REX :) "), false); */
+
+    switch (get_highest_layer(layer_state)) {
+        case _QWERTY:
+            oled_write_P(PSTR("Default\n"), false);
+            break;
+        case _VIM:
+            oled_write_P(PSTR("VIM\n"), false);
+            break;
+        case _LOWER:
+            oled_write_P(PSTR("LOWER\n"), false);
+            break;
+        default:
+            // Or use the write_ln shortcut over adding '\n' to the end of your string
+            oled_write_ln_P(PSTR("Undefined"), false);
+    }
   return false;
 }
 #endif // OLED_ENABLE
