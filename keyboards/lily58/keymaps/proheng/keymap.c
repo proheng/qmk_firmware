@@ -146,10 +146,11 @@ bool oled_task_kb(void) {
       case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break;
     }
   } else {
-    switch(right_knob_step%2){
-      case 0: oled_write_ln_P(PSTR("Windows Movement"), false);break;
-      case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break;
-    }
+    /* switch(right_knob_step%2){ */
+    /*     // this never work */ 
+    /*   case 0: oled_write_ln_P(PSTR("Windows Movement"), false);break; */
+    /*   case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break; */
+    /* } */
   }
         // If you want to change the display of OLED, you need to change here
         /* oled_write_P(PSTR("REX :) "), false); */
@@ -248,10 +249,11 @@ void knob_action_switcher(uint8_t index, bool clockwise){
         }
     }
     if(index==1){
-        switch(right_knob_step%2){
-            case 0: knob_windows_movement(clockwise);break;
-            case 1: knob_tab_movement(clockwise);break;
-        }
+        knob_tab_movement(clockwise);
+        /* switch(right_knob_step%2){ */
+        /*     case 0: knob_windows_movement(clockwise);break; */
+        /*     case 1: knob_tab_movement(clockwise);break; */
+        /* } */
     }
 }
 
