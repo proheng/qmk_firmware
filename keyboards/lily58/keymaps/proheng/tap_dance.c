@@ -210,6 +210,9 @@ void cad_finished(qk_tap_dance_state_t *state, void *user_data) {
         case TD_TRIPLE_TAP:
             tap_code16(KC_CAD);
             break;
+        case TD_SINGLE_HOLD: 
+            layer_on(2);
+            break;
         default:
             break;
     }
@@ -219,6 +222,9 @@ void cad_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
         case TD_SINGLE_TAP: 
             clear_oneshot_layer_state(ONESHOT_PRESSED); break;
+            break;
+        case TD_SINGLE_HOLD: 
+            layer_off(2);
             break;
         default:
             break;
