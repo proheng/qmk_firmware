@@ -95,7 +95,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
-
 [_RAISE] = LAYOUT(
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
@@ -148,9 +147,8 @@ bool oled_task_kb(void) {
     }
   } else {
   }
-        // If you want to change the display of OLED, you need to change here
-        /* oled_write_P(PSTR("REX :) "), false); */
-
+    // If you want to change the display of OLED, you need to change here
+    /* oled_write_P(PSTR("REX :) "), false); */
     switch (get_highest_layer(layer_state)) {
         case _QWERTY:
             oled_write_P(PSTR("Default\n"), false);
@@ -252,14 +250,14 @@ void knob_tabbing(bool clockwise){
 }
 
 void knob_action_switcher(uint8_t index, bool clockwise){
-    if(index==0){
-        switch(left_knob_step%3){
+    if(index == 0){
+        switch(left_knob_step % 3){
             case 0: knob_windows_movement(clockwise);break;
             case 1: knob_tab_movement(clockwise);break;
             case 2: knob_tabbing(clockwise);break;
         }
     }
-    if(index==1){
+    if(index == 1){
         knob_tab_movement(clockwise);
     }
 }
