@@ -148,7 +148,6 @@ bool oled_task_kb(void) {
   } else {
   }
     // If you want to change the display of OLED, you need to change here
-    /* oled_write_P(PSTR("REX :) "), false); */
     switch (get_highest_layer(layer_state)) {
         case _QWERTY:
             oled_write_P(PSTR("Default\n"), false);
@@ -177,6 +176,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RIGHT_KNOB:
           if (record->event.pressed) {
             right_knob_step = right_knob_step + 1;
+          }
+          return true;
+        case LCTL_T(KC_SPC):
+          if (!record->tap.count && record->event.pressed) {
+              oled_write_ln_P(PSTR("CTRL HOLDED\n"), false);
+          }
+          else
+          {
+            oled_clear();
           }
           return true;
         default:
