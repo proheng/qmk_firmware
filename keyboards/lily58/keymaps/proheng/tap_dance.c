@@ -307,3 +307,13 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_KC_BSLS] = ACTION_TAP_DANCE_DOUBLE(KC_BSLS,S(KC_BSLS)),
     [TD_SFT_CST] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, sft_cst_finished, sft_cst_reset)
 };
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record){
+    switch(keycode){
+        case TD(TD_SFT_CST):
+            return TAPPING_TERM ;
+        default:
+            return TAPPING_TERM;
+
+    }
+}
