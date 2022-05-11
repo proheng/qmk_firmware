@@ -28,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------| L_KNOB|    |R_KNOB |------+------+------+------+------+------|
  * | LSFT |   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  | RSFT | 
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | LAlt | LGUI |C Space|/ ENT   /       \  ENT \| BackSP  |RGUI  |TD_CAD |
+ *                   | LAlt | LGUI |C Space|/SFT_CST/       \  ENT \| BackSP  |RGUI  |TD_CAD |
  *                   `-----------------------------'        '--------------------------------'
  */
 
@@ -37,7 +37,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   C_S_T(KC_Q),   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,            KC_H,    RSFT_T(KC_J),    RGUI_T(KC_K), RALT_T(KC_L), RCTL_T(KC_SCLN), KC_QUOT,
   KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                   KC_LALT, KC_LGUI, LCTL_T(KC_SPC),KC_ENT,         KC_ENT, LT(_VIM, KC_BSPC), KC_RGUI, TD(TD_CAD)  
+                   KC_LALT, KC_LGUI, LCTL_T(KC_SPC),TD(TD_SFT_CST),         KC_ENT, LT(_VIM, KC_BSPC), KC_RGUI, TD(TD_CAD)  
 ),
 /* _VIM
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -136,7 +136,14 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 
 // When you add source files to SRC in rules.mk, you can use functions.
 const char *read_layer_state(void);
-const char *read_logo(void);
+static void render_custom_logo(void) {
+    static const char PROGMEM qmk_custom_logo[] = {
+        153,154,10,
+        185,186,0
+    };
+
+    oled_write_P(qmk_custom_logo, false);
+}
 
 bool oled_task_kb(void) {
   if (is_keyboard_master()) {
@@ -145,8 +152,6 @@ bool oled_task_kb(void) {
       case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break;
       case 2: oled_write_ln_P(PSTR("Tabbing"), false);break;
     }
-  } else {
-  }
     // If you want to change the display of OLED, you need to change here
     switch (get_highest_layer(layer_state)) {
         case _QWERTY:
@@ -162,6 +167,9 @@ bool oled_task_kb(void) {
             // Or use the write_ln shortcut over adding '\n' to the end of your string
             oled_write_ln_P(PSTR("Undefined"), false);
     }
+  } else {
+    render_custom_logo();
+  }
   return false;
 }
 #endif // OLED_ENABLE
