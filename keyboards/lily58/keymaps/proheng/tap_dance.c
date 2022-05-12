@@ -207,6 +207,20 @@ void cad_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
         case TD_SINGLE_TAP: 
             set_oneshot_layer(2, ONESHOT_START); break;
+        case TD_DOUBLE_TAP:
+            tap_code16(KC_A);
+            tap_code16(KC_W);
+            tap_code16(KC_3);
+            tap_code16(KC_E);
+            tap_code16(KC_D);
+            tap_code16(KC_S);
+            tap_code16(S(KC_A));
+            tap_code16(S(KC_W));
+            tap_code16(S(KC_3));
+            tap_code16(S(KC_E));
+            tap_code16(S(KC_D));
+            tap_code16(S(KC_S));
+            break;
         case TD_TRIPLE_TAP:
             tap_code16(KC_CAD);
             break;
