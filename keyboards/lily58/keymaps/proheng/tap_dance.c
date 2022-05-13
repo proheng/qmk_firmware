@@ -272,38 +272,12 @@ void cap_reset(qk_tap_dance_state_t *state, void *user_data) {
     tap_state.state = TD_NONE;
 }
 
-void sft_cst_finished(qk_tap_dance_state_t *state, void *user_data) {
-    tap_state.state = cur_dance(state);
-    switch (tap_state.state) {
-        case TD_SINGLE_HOLD: 
-            oled_write_P(PSTR("SHIFT\n"), false);
-            PRESS(KC_LSFT);
-            PRESS(KC_LCTL);
-            break;
-        default:
-            break;
-    }
-}
-
-void sft_cst_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (tap_state.state) {
-        case TD_SINGLE_HOLD: 
-            RELEASE(KC_LSFT);
-            RELEASE(KC_LCTL);
-            break;
-        default:
-            break;
-    }
-    oled_clear();
-    tap_state.state = TD_NONE;
-}
 enum {
     TD_CAD = 0,
     TD_CAP = 1,
     TD_KC_LBRC = 2,
     TD_KC_RBRC = 3,
-    TD_KC_BSLS = 4,
-    TD_SFT_CST = 5
+    TD_KC_BSLS = 4
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
@@ -312,13 +286,10 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_KC_LBRC] = ACTION_TAP_DANCE_DOUBLE(KC_LBRC,S(KC_LBRC)),
     [TD_KC_RBRC] = ACTION_TAP_DANCE_DOUBLE(KC_RBRC,S(KC_RBRC)),
     [TD_KC_BSLS] = ACTION_TAP_DANCE_DOUBLE(KC_BSLS,S(KC_BSLS)),
-    [TD_SFT_CST] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, sft_cst_finished, sft_cst_reset)
 };
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record){
     switch(keycode){
-        case TD(TD_SFT_CST):
-            return TAPPING_TERM ;
         default:
             return TAPPING_TERM;
 
