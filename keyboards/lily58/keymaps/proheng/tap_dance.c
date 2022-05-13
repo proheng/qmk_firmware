@@ -278,10 +278,6 @@ void sft_cst_finished(qk_tap_dance_state_t *state, void *user_data) {
         case TD_SINGLE_HOLD: 
             oled_write_P(PSTR("SHIFT\n"), false);
             PRESS(KC_LSFT);
-            break;
-        case TD_DOUBLE_HOLD: 
-            oled_write_P(PSTR("CTRL SHIFT\n"), false);
-            PRESS(KC_LSFT);
             PRESS(KC_LCTL);
             break;
         default:
@@ -292,9 +288,6 @@ void sft_cst_finished(qk_tap_dance_state_t *state, void *user_data) {
 void sft_cst_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
         case TD_SINGLE_HOLD: 
-            RELEASE(KC_LSFT);
-            break;
-        case TD_DOUBLE_HOLD: 
             RELEASE(KC_LSFT);
             RELEASE(KC_LCTL);
             break;
