@@ -6,7 +6,6 @@ enum layer_number {
   _VIM = 1,
   _LOWER = 2,
   _RAISE = 3,
-  _ADJUST = 4,
 };
 
 enum my_keycodes {
@@ -28,7 +27,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------| L_KNOB|    |R_KNOB |------+------+------+------+------+------|
  * | LSFT |   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  | RSFT | 
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |  LGUI | LAlt|C Space|/SFT_CST/       \  ENT \| BackSP  |TD_CAD | RGUI |
+ *                   |  LGUI | LAlt | SFT_CST/Space|/       \  BackSP \| ENT  |TD_CAD | RGUI |
  *                   `-----------------------------'        '--------------------------------'
  */
 
@@ -37,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   LCTL_T(KC_Q),   LALT_T(KC_W),   LGUI_T(KC_E),   LSFT_T(KC_R),    KC_T,              KC_Y,    RSFT_T(KC_U),  RGUI_T(KC_I), RALT_T(KC_O), RCTL_T(KC_P), KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,                     KC_H,    KC_J,    KC_K, KC_L, KC_SCLN, KC_QUOT,
   KC_LSFT,  LT(0,KC_Z),  LT(0,KC_X),    LT(0,KC_C),    LT(0,KC_V),    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                   KC_LGUI, KC_LALT, LCTL_T(KC_SPC),C_S_T(KC_ENT),         KC_ENT, LT(_VIM, KC_BSPC), TD(TD_CAD), KC_RGUI   
+                   KC_LGUI, KC_LALT, C_S_T(KC_ENT), LCTL_T(KC_SPC),        LT(_VIM, KC_BSPC), KC_ENT, TD(TD_CAD), KC_RGUI   
 ),
 /* _VIM
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -101,28 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_F1,  KC_F2,    KC_F3,   KC_F4,   KC_F5,   KC_F6,                       XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,
   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,   _______, _______,  KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
                              _______, _______, _______,  _______, _______,  _______, _______, _______
-),
-/* ADJUST
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------.    ,-------|      |      |RGB ON| HUE+ | SAT+ | VAL+ |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|      |      | MODE | HUE- | SAT- | VAL- |
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
- *                   |      |      |      |/       /         \      \ |      |      |      |
- *                   `----------------------------'           '------''--------------------'
- */
-  [_ADJUST] = LAYOUT(
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                             _______, _______, _______, _______, _______,  _______, _______, _______
-  )
+)
 };
 
 //SSD1306 OLED update loop, make sure to enable OLED_ENABLE=yes in rules.mk
@@ -147,10 +125,10 @@ static void render_custom_logo(void) {
 
 bool oled_task_kb(void) {
   if (is_keyboard_master()) {
-    switch(left_knob_step%3){
+    switch(left_knob_step%2){
       case 0: oled_write_ln_P(PSTR("Windows Movement"), false);break;
-      case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break;
-      case 2: oled_write_ln_P(PSTR("Tabbing"), false);break;
+      //case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break;
+      case 1: oled_write_ln_P(PSTR("Tabbing"), false);break;
     }
     // If you want to change the display of OLED, you need to change here
     switch (get_highest_layer(layer_state)) {
@@ -290,10 +268,10 @@ void knob_tabbing(bool clockwise){
 
 void knob_action_switcher(uint8_t index, bool clockwise){
     if(index == 0){
-        switch(left_knob_step % 3){
+        switch(left_knob_step % 2){
             case 0: knob_windows_movement(clockwise);break;
-            case 1: knob_tab_movement(clockwise);break;
-            case 2: knob_tabbing(clockwise);break;
+            //case 1: knob_tab_movement(clockwise);break;
+            case 1: knob_tabbing(clockwise);break;
         }
     }
     if(index == 1){
