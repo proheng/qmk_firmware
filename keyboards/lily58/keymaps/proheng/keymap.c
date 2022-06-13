@@ -5,7 +5,8 @@ enum layer_number {
   _QWERTY = 0,
   _VIM = 1,
   _LOWER = 2,
-  _RAISE = 3,
+  _QWERTY_MAC = 3,
+  _VIM_MAC = 4,
 };
 
 enum my_keycodes {
@@ -27,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------| L_KNOB|    |R_KNOB |------+------+------+------+------+------|
  * | LSFT |   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  | RSFT | 
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |  LGUI | LAlt | SFT_CST/Space|/       \  BackSP \| ENT  |TD_CAD | RGUI |
+ *                   |  LGUI | MO(_VIM) | Space/|SFT_CST/       \  ENT \| BackSP  |TD_CAD | RGUI |
  *                   `-----------------------------'        '--------------------------------'
  */
 
@@ -36,7 +37,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   LCTL_T(KC_Q),   LALT_T(KC_W),   LGUI_T(KC_E),   LSFT_T(KC_R),    KC_T,              KC_Y,    RSFT_T(KC_U),  RGUI_T(KC_I), RALT_T(KC_O), RCTL_T(KC_P), KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,                     KC_H,    KC_J,    KC_K, KC_L, KC_SCLN, KC_QUOT,
   KC_LSFT,  LT(0,KC_Z),  LT(0,KC_X),    LT(0,KC_C),    LT(0,KC_V),    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                   KC_LGUI, KC_LALT, C_S_T(KC_ENT), LCTL_T(KC_SPC),        LT(_VIM, KC_BSPC), KC_ENT, TD(TD_CAD), KC_RGUI   
+                   KC_LGUI, MO(_VIM),  LCTL_T(KC_SPC), C_S_T(KC_ENT),       KC_ENT, LT(_VIM, KC_BSPC),  TD(TD_CAD), KC_RGUI   
+),
+ [_QWERTY_MAC] = LAYOUT(
+  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+  KC_TAB,   LCTL_T(KC_Q),   LALT_T(KC_W),   LGUI_T(KC_E),   LSFT_T(KC_R),    KC_T,              KC_Y,    RSFT_T(KC_U),  RGUI_T(KC_I), RALT_T(KC_O), RCTL_T(KC_P), KC_EQL,
+  TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,                     KC_H,    KC_J,    KC_K, KC_L, KC_SCLN, KC_QUOT,
+  KC_LSFT,  LT(1,KC_Z),  LT(1,KC_X),    LT(0,KC_C),    LT(0,KC_V),    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
+                   KC_LGUI, KC_LALT, LSG_T(KC_ENT), LGUI_T(KC_SPC),        LT(_VIM, KC_BSPC), KC_ENT, TD(TD_CAD), KC_RGUI   
 ),
 /* _VIM
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -46,12 +54,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |VIM D |      |      |-------.    ,-------| LEFT | DOWN |  UP  |RIGHT | HOME | END  |
  * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
- * |______|      |VIM X |      |      |VIM B |-------|    |-------|      |      |      |      |      |______|
+ * |______|      |VIM X |      |      |VIM B |-------|    |-------|      | PGDN | PGUP |      |      |______|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   |      |      |       |/       /       \      \|      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
 [_VIM] = LAYOUT(
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, TD(TD_KC_LBRC), TD(TD_KC_RBRC), TD(TD_KC_BSLS),
+  XXXXXXX, XXXXXXX, LCTL(KC_RGHT), LCTL(KC_RGHT), XXXXXXX, XXXXXXX,       RCTL(KC_INS), RCTL(KC_Z), XXXXXXX, XXXXXXX, RSFT(KC_INS), XXXXXXX,
+  XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC, XXXXXXX, XXXXXXX,                   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_HOME, KC_END,
+  _______, XXXXXXX, KC_DEL,  XXXXXXX, XXXXXXX, LCTL(KC_LEFT),  XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, _______,
+                             _______, _______, _______, _______, _______,  _______, _______, _______
+),
+[_VIM_MAC] = LAYOUT(
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, TD(TD_KC_LBRC), TD(TD_KC_RBRC), TD(TD_KC_BSLS),
   XXXXXXX, XXXXXXX, LCTL(KC_RGHT), LCTL(KC_RGHT), XXXXXXX, XXXXXXX,       RCTL(KC_INS), RCTL(KC_Z), XXXXXXX, XXXXXXX, RSFT(KC_INS), XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC, XXXXXXX, XXXXXXX,                   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_HOME, KC_END,
@@ -79,27 +94,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                     KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
   _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE,
                              _______, _______, _______, _______, _______,  _______, _______, _______
-),
-/* RAISE
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |   `  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |-------.    ,-------|      | Left | Down |  Up  |Right |      |
- * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |  F7  |  F8  |  F9  | F10  | F11  | F12  |-------|    |-------|   +  |   -  |   =  |   [  |   ]  |   \  |
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
- *                   |      |      |      |/       /         \      \ |      |      |      |
- *                   `----------------------------'           '------''--------------------'
- */
-[_RAISE] = LAYOUT(
-  _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-  KC_F1,  KC_F2,    KC_F3,   KC_F4,   KC_F5,   KC_F6,                       XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,
-  KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,   _______, _______,  KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
-                             _______, _______, _______,  _______, _______,  _______, _______, _______
 )
 };
 
@@ -196,6 +190,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             }
             return true;             // Return true for normal processing of tap keycode
+        case LT(1,KC_X):
+            if (!record->tap.count && record->event.pressed) {
+                tap_code16(G(KC_X)); // Intercept hold function to send CMD-X
+                return true;             // Return true for normal processing of tap keycode
+            }
+        case LT(1,KC_Z):
+            if (!record->tap.count && record->event.pressed) {
+                tap_code16(G(KC_Z)); // Intercept hold function to send Ctrl-V
+                return true;
+            }
+            return true;             // Return true for normal processing of tap keycode
         default:
           return true;
     }
@@ -250,32 +255,48 @@ void knob_tab_movement(bool clockwise){
         tap_code16(S(KC_TAB));
     }
 }
-void knob_tabbing(bool clockwise){
-    if (clockwise) {
-        if (!is_ctrl_tab_active) {
-            is_ctrl_tab_active = true;
-        }
-        ctrl_tab_timer = timer_read();
-        tap_code16(KC_TAB);
-    } else {
-        if (!is_ctrl_tab_active) {
-            is_ctrl_tab_active = true;
-        }
-        ctrl_tab_timer = timer_read();
-        tap_code16(S(KC_TAB));
-    }
-}
+//void knob_tabbing(bool clockwise){
+//    if (clockwise) {
+//        if (!is_ctrl_tab_active) {
+//            is_ctrl_tab_active = true;
+//        }
+//        //TODO remove the following line
+//	//ctrl_tab_timer = timer_read();
+//        tap_code16(KC_TAB);
+//    } else {
+//        if (!is_ctrl_tab_active) {
+//            is_ctrl_tab_active = true;
+//        }
+//        //TODO remove the following line
+//        //ctrl_tab_timer = timer_read();
+//        tap_code16(S(KC_TAB));
+//    }
+//}
 
+void knob_scrolling(bool clockwise){
+	if(clockwise){
+		tap_code(KC_PGDN);
+	}
+	else{
+		tap_code(KC_PGUP);
+	}
+}
 void knob_action_switcher(uint8_t index, bool clockwise){
     if(index == 0){
-        switch(left_knob_step % 2){
-            case 0: knob_windows_movement(clockwise);break;
+	knob_windows_movement(clockwise);
+        //switch(left_knob_step % 2){
+            //case 0: knob_windows_movement(clockwise);break;
             //case 1: knob_tab_movement(clockwise);break;
-            case 1: knob_tabbing(clockwise);break;
-        }
+            //case 1: knob_tabbing(clockwise);break;
+        //}
     }
     if(index == 1){
-        knob_tab_movement(clockwise);
+	if(biton32(layer_state) != _VIM){
+		knob_tab_movement(clockwise);
+	}
+	else{
+		knob_scrolling(clockwise);
+	}
     }
 }
 
@@ -286,13 +307,13 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 }
 void matrix_scan_user(void) {
   if (is_alt_tab_active) {
-    if (timer_elapsed(alt_tab_timer) > 1200) {
+    if (timer_elapsed(alt_tab_timer) > 1000) {
       unregister_code(KC_LALT);
       is_alt_tab_active = false;
     }
   }
   if (is_ctrl_tab_active) {
-    if (timer_elapsed(ctrl_tab_timer) > 1200) {
+    if (timer_elapsed(ctrl_tab_timer) > 1000) {
       unregister_code(KC_LCTL);
       is_ctrl_tab_active = false;
     }
