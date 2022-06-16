@@ -121,8 +121,7 @@ bool oled_task_kb(void) {
   if (is_keyboard_master()) {
     switch(left_knob_step%2){
       case 0: oled_write_ln_P(PSTR("Windows Movement"), false);break;
-      //case 1: oled_write_ln_P(PSTR("Tab Movement"), false);break;
-      case 1: oled_write_ln_P(PSTR("Tabbing"), false);break;
+      case 1: oled_write_ln_P(PSTR("Winodws Movement Mac"), false);break;
     }
     // If you want to change the display of OLED, you need to change here
     switch (get_highest_layer(layer_state)) {
@@ -219,6 +218,8 @@ bool is_alt_tab_active = false;
 uint16_t alt_tab_timer = 0;
 bool is_ctrl_tab_active = false;
 uint16_t ctrl_tab_timer = 0;
+bool is_gui_tab_active = false;
+uint16_t gui_tab_timer = 0;
 
 void knob_windows_movement(bool clockwise){
     if (clockwise) {
@@ -238,6 +239,23 @@ void knob_windows_movement(bool clockwise){
     }
 }
 
+void knob_windows_movement_mac(bool clockwise){
+    if (clockwise) {
+        if (!is_gui_tab_active) {
+            is_gui_tab_active = true;
+            register_code(KC_LGUI);
+        }
+        gui_tab_timer = timer_read();
+        tap_code16(KC_TAB);
+    } else {
+        if (!is_gui_tab_active) {
+            is_gui_tab_active = true;
+            register_code(KC_LGUI);
+        }
+        gui_tab_timer = timer_read();
+        tap_code16(S(KC_TAB));
+    }
+}
 void knob_tab_movement(bool clockwise){
     if (clockwise) {
         if (!is_ctrl_tab_active) {
@@ -255,23 +273,6 @@ void knob_tab_movement(bool clockwise){
         tap_code16(S(KC_TAB));
     }
 }
-//void knob_tabbing(bool clockwise){
-//    if (clockwise) {
-//        if (!is_ctrl_tab_active) {
-//            is_ctrl_tab_active = true;
-//        }
-//        //TODO remove the following line
-//	//ctrl_tab_timer = timer_read();
-//        tap_code16(KC_TAB);
-//    } else {
-//        if (!is_ctrl_tab_active) {
-//            is_ctrl_tab_active = true;
-//        }
-//        //TODO remove the following line
-//        //ctrl_tab_timer = timer_read();
-//        tap_code16(S(KC_TAB));
-//    }
-//}
 
 void knob_scrolling(bool clockwise){
 	if(clockwise){
@@ -283,12 +284,10 @@ void knob_scrolling(bool clockwise){
 }
 void knob_action_switcher(uint8_t index, bool clockwise){
     if(index == 0){
-	knob_windows_movement(clockwise);
-        //switch(left_knob_step % 2){
-            //case 0: knob_windows_movement(clockwise);break;
-            //case 1: knob_tab_movement(clockwise);break;
-            //case 1: knob_tabbing(clockwise);break;
-        //}
+        switch(left_knob_step % 2){
+            case 0: knob_windows_movement(clockwise);break;
+            case 1: knob_windows_movement_mac(clockwise);break;
+        }
     }
     if(index == 1){
 	if(biton32(layer_state) != _VIM){
@@ -316,6 +315,12 @@ void matrix_scan_user(void) {
     if (timer_elapsed(ctrl_tab_timer) > 1000) {
       unregister_code(KC_LCTL);
       is_ctrl_tab_active = false;
+    }
+  }
+  if (is_gui_tab_active) {
+    if (timer_elapsed(gui_tab_timer) > 1000) {
+      unregister_code(KC_LGUI);
+      is_gui_tab_active = false;
     }
   }
 }
