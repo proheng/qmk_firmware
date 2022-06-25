@@ -6,7 +6,6 @@ enum layer_number {
   _VIM = 1,
   _LOWER = 2,
   _QWERTY_MAC = 3,
-  _VIM_MAC = 4,
 };
 
 enum my_keycodes {
@@ -26,7 +25,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |TD_CAP|   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |RSFT J|RGUI K|RALT L|RCTL ;|  '   |
  * |------+------+------+------+------+------| L_KNOB|    |R_KNOB |------+------+------+------+------+------|
- * | LSFT |   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  | RSFT | 
+ * | LSFT |   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  | RSFT |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   |  LGUI | MO(_VIM) | Space/|SFT_CST/       \  ENT \| BackSP  |TD_CAD | RGUI |
  *                   `-----------------------------'        '--------------------------------'
@@ -37,14 +36,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   LCTL_T(KC_Q),   LALT_T(KC_W),   LGUI_T(KC_E),   LSFT_T(KC_R),    KC_T,              KC_Y,    RSFT_T(KC_U),  RGUI_T(KC_I), RALT_T(KC_O), RCTL_T(KC_P), KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,                     KC_H,    KC_J,    KC_K, KC_L, KC_SCLN, KC_QUOT,
   KC_LSFT,  LT(0,KC_Z),  LT(0,KC_X),    LT(0,KC_C),    LT(0,KC_V),    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                   KC_LGUI, MO(_VIM),  LCTL_T(KC_SPC), C_S_T(KC_ENT),       KC_ENT, LT(_VIM, KC_BSPC),  TD(TD_CAD), KC_RGUI   
+                   KC_LGUI, MO(_VIM),  LCTL_T(KC_SPC), C_S_T(KC_ENT),       LCA_T(KC_ENT), LT(_VIM, KC_BSPC),  TD(TD_CAD), KC_RGUI
 ),
  [_QWERTY_MAC] = LAYOUT(
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
   KC_TAB,   LCTL_T(KC_Q),   LALT_T(KC_W),   LGUI_T(KC_E),   LSFT_T(KC_R),    KC_T,              KC_Y,    RSFT_T(KC_U),  RGUI_T(KC_I), RALT_T(KC_O), RCTL_T(KC_P), KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,                     KC_H,    KC_J,    KC_K, KC_L, KC_SCLN, KC_QUOT,
   KC_LSFT,  LT(1,KC_Z),  LT(1,KC_X),    LT(0,KC_C),    LT(0,KC_V),    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                   KC_LGUI, KC_LALT, LSG_T(KC_ENT), LGUI_T(KC_SPC),        LT(_VIM, KC_BSPC), KC_ENT, TD(TD_CAD), KC_RGUI   
+                   KC_LGUI, KC_LALT, LSG_T(KC_ENT), LGUI_T(KC_SPC),        LT(_VIM, KC_BSPC), KC_ENT, TD(TD_CAD), KC_RGUI
 ),
 /* _VIM
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -60,13 +59,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   `----------------------------'           '------''--------------------'
  */
 [_VIM] = LAYOUT(
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, TD(TD_KC_LBRC), TD(TD_KC_RBRC), TD(TD_KC_BSLS),
-  XXXXXXX, XXXXXXX, LCTL(KC_RGHT), LCTL(KC_RGHT), XXXXXXX, XXXXXXX,       RCTL(KC_INS), RCTL(KC_Z), XXXXXXX, XXXXXXX, RSFT(KC_INS), XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC, XXXXXXX, XXXXXXX,                   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_HOME, KC_END,
-  _______, XXXXXXX, KC_DEL,  XXXXXXX, XXXXXXX, LCTL(KC_LEFT),  XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, _______,
-                             _______, _______, _______, _______, _______,  _______, _______, _______
-),
-[_VIM_MAC] = LAYOUT(
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, TD(TD_KC_LBRC), TD(TD_KC_RBRC), TD(TD_KC_BSLS),
   XXXXXXX, XXXXXXX, LCTL(KC_RGHT), LCTL(KC_RGHT), XXXXXXX, XXXXXXX,       RCTL(KC_INS), RCTL(KC_Z), XXXXXXX, XXXXXXX, RSFT(KC_INS), XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC, XXXXXXX, XXXXXXX,                   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_HOME, KC_END,
@@ -210,7 +202,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  *
  * The index parameter tells you which encoder was turned. If you only have
  * one encoder, the index will always be zero.
- * 
+ *
  * The clockwise parameter tells you the direction of the encoder. It'll be
  * true when you turned the encoder clockwise, and false otherwise.
  */
@@ -310,10 +302,10 @@ void knob_action_switcher(uint8_t index, bool clockwise){
     }
     if(index == 1){
         switch(right_knob_step % 2){
-            case 0: 
+            case 0:
 		knob_tab_movement(clockwise);
 		break;
-            case 1: 
+            case 1:
 		knob_tab_movement_mac(clockwise);
 		break;
         }
