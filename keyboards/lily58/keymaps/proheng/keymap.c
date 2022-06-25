@@ -229,6 +229,7 @@ void knob_windows_movement(bool clockwise){
         }
         alt_tab_timer = timer_read();
         tap_code16(KC_TAB);
+
     } else {
         if (!is_alt_tab_active) {
             is_alt_tab_active = true;
@@ -274,6 +275,24 @@ void knob_tab_movement(bool clockwise){
     }
 }
 
+void knob_tab_movement_mac(bool clockwise){
+    if (clockwise) {
+        if (!is_gui_tab_active) {
+            is_gui_tab_active = true;
+            register_code(KC_LGUI);
+        }
+        gui_tab_timer = timer_read();
+        tap_code16(A(KC_RIGHT));
+    } else {
+        if (!is_gui_tab_active) {
+            is_gui_tab_active = true;
+            register_code(KC_LGUI);
+        }
+        gui_tab_timer = timer_read();
+        tap_code16(A(KC_LEFT));
+    }
+}
+
 void knob_scrolling(bool clockwise){
 	if(clockwise){
 		tap_code(KC_PGDN);
@@ -290,12 +309,14 @@ void knob_action_switcher(uint8_t index, bool clockwise){
         }
     }
     if(index == 1){
-	if(biton32(layer_state) != _VIM){
+        switch(right_knob_step % 2){
+            case 0: 
 		knob_tab_movement(clockwise);
-	}
-	else{
-		knob_scrolling(clockwise);
-	}
+		break;
+            case 1: 
+		knob_tab_movement_mac(clockwise);
+		break;
+        }
     }
 }
 
