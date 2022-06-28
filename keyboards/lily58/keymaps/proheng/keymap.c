@@ -3,9 +3,10 @@
 
 enum layer_number {
   _QWERTY = 0,
-  _VIM = 1,
-  _LOWER = 2,
-  _QWERTY_MAC = 3,
+  _QWERTY_MAC = 1,
+  _VIM = 2,
+  _VIM_MAC = 3,
+  _LOWER = 4,
 };
 
 enum my_keycodes {
@@ -43,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   LCTL_T(KC_Q),   LALT_T(KC_W),   LGUI_T(KC_E),   LSFT_T(KC_R),    KC_T,              KC_Y,    RSFT_T(KC_U),  RGUI_T(KC_I), RALT_T(KC_O), RCTL_T(KC_P), KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,                     KC_H,    KC_J,    KC_K, KC_L, KC_SCLN, KC_QUOT,
   KC_LSFT,  LT(1,KC_Z),  LT(1,KC_X),    LT(0,KC_C),    LT(0,KC_V),    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                   KC_LGUI, KC_LALT, LSG_T(KC_ENT), LGUI_T(KC_SPC),        LT(_VIM, KC_BSPC), KC_ENT, TD(TD_CAD), KC_RGUI
+                   KC_LGUI, MO(_VIM_MAC),  LCTL_T(KC_SPC), C_S_T(KC_ENT),       LCA_T(KC_ENT), LT(_VIM_MAC, KC_BSPC),  TD(TD_CAD), KC_RGUI
 ),
 /* _VIM
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -62,6 +63,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, TD(TD_KC_LBRC), TD(TD_KC_RBRC), TD(TD_KC_BSLS),
   XXXXXXX, XXXXXXX, LCTL(KC_RGHT), LCTL(KC_RGHT), XXXXXXX, XXXXXXX,       RCTL(KC_INS), RCTL(KC_Z), XXXXXXX, XXXXXXX, RSFT(KC_INS), XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC, XXXXXXX, XXXXXXX,                   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_HOME, KC_END,
+  _______, XXXXXXX, KC_DEL,  XXXXXXX, XXXXXXX, LCTL(KC_LEFT),  XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, _______,
+                             _______, _______, _______, _______, _______,  _______, _______, _______
+),
+[_VIM_MAC] = LAYOUT(
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, TD(TD_KC_LBRC), TD(TD_KC_RBRC), TD(TD_KC_BSLS),
+  XXXXXXX, XXXXXXX, LALT(KC_RGHT), LALT(KC_RGHT), XXXXXXX, XXXXXXX,       RCTL(KC_INS), RCTL(KC_Z), XXXXXXX, XXXXXXX, RSFT(KC_INS), XXXXXXX,
+  XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC, XXXXXXX, XXXXXXX,                   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, LGUI(KC_LEFT), LGUI(KC_RIGHT),
   _______, XXXXXXX, KC_DEL,  XXXXXXX, XXXXXXX, LCTL(KC_LEFT),  XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, _______,
                              _______, _______, _______, _______, _______,  _______, _______, _______
 ),
@@ -118,10 +126,16 @@ bool oled_task_kb(void) {
     // If you want to change the display of OLED, you need to change here
     switch (get_highest_layer(layer_state)) {
         case _QWERTY:
-            oled_write_P(PSTR("Default\n"), false);
+            oled_write_P(PSTR("QWERTY\n"), false);
+            break;
+        case _QWERTY_MAC:
+            oled_write_P(PSTR("QWERTY MAC\n"), false);
             break;
         case _VIM:
             oled_write_P(PSTR("VIM\n"), false);
+            break;
+        case _VIM_MAC:
+            oled_write_P(PSTR("VIM MAC\n"), false);
             break;
         case _LOWER:
             oled_write_P(PSTR("LOWER\n"), false);
@@ -142,6 +156,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LEFT_KNOB:
           if (record->event.pressed) {
             left_knob_step = left_knob_step + 1;
+
+            if(layer_state_is(_QWERTY))
+            {
+                layer_move(_QWERTY_MAC);
+            }
+            else if(layer_state_is(_QWERTY_MAC))
+            {
+                layer_move(_QWERTY);
+            }
           }
           return true;
         case RIGHT_KNOB:

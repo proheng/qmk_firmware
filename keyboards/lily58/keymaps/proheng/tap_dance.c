@@ -118,14 +118,14 @@ static td_tap_t tap_state = {
 
 
 /* ------------------------------------------------------------------------------------------------------- */
-/* These are the key specified handler */ 
+/* These are the key specified handler */
 /* ------------------------------------------------------------------------------------------------------- */
 
 void cad_finished(qk_tap_dance_state_t *state, void *user_data) {
     tap_state.state = cur_dance(state);
     switch (tap_state.state) {
-        case TD_SINGLE_TAP: 
-            set_oneshot_layer(2, ONESHOT_START); break;
+        case TD_SINGLE_TAP:
+            set_oneshot_layer(4, ONESHOT_START); break;
         case TD_DOUBLE_TAP:
             tap_code16(KC_A);
             tap_code16(KC_W);
@@ -143,8 +143,8 @@ void cad_finished(qk_tap_dance_state_t *state, void *user_data) {
         case TD_TRIPLE_TAP:
             tap_code16(KC_CAD);
             break;
-        case TD_SINGLE_HOLD: 
-            layer_on(2);
+        case TD_SINGLE_HOLD:
+            layer_on(4);
             break;
         default:
             break;
@@ -153,11 +153,11 @@ void cad_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 void cad_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
-        case TD_SINGLE_TAP: 
+        case TD_SINGLE_TAP:
             clear_oneshot_layer_state(ONESHOT_PRESSED); break;
             break;
-        case TD_SINGLE_HOLD: 
-            layer_off(2);
+        case TD_SINGLE_HOLD:
+            layer_off(4);
             break;
         default:
             break;
@@ -168,9 +168,9 @@ void cad_reset(qk_tap_dance_state_t *state, void *user_data) {
 void cap_finished(qk_tap_dance_state_t *state, void *user_data) {
     tap_state.state = cur_dance(state);
     switch (tap_state.state) {
-        case TD_SINGLE_TAP: 
+        case TD_SINGLE_TAP:
             TAP(KC_ESC); break;
-        case TD_SINGLE_HOLD: 
+        case TD_SINGLE_HOLD:
             oled_write_P(PSTR("CTRL HOLDED\n"), false);
             PRESS(KC_LCTL); break;
         default:
@@ -180,13 +180,13 @@ void cap_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 void cap_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (tap_state.state) {
-        case TD_SINGLE_HOLD: 
+        case TD_SINGLE_HOLD:
             oled_clear();
             RELEASE(KC_LCTL);
             break;
         default:
             break;
-            
+
     }
     tap_state.state = TD_NONE;
 }
