@@ -43,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
   KC_TAB,   LCTL_T(KC_Q),   LALT_T(KC_W),   LGUI_T(KC_E),   LSFT_T(KC_R),    KC_T,              KC_Y,    RSFT_T(KC_U),  RGUI_T(KC_I), RALT_T(KC_O), RCTL_T(KC_P), KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,                     KC_H,    KC_J,    KC_K, KC_L, KC_SCLN, KC_QUOT,
-  KC_LSFT,  LT(1,KC_Z),  LT(1,KC_X),    LT(0,KC_C),    LT(0,KC_V),    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
+  KC_LSFT,  _______,  _______,    _______,    _______,    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
                    KC_LGUI, MO(_VIM_MAC),  LGUI_T(KC_SPC), C_S_T(KC_ENT),       LCA_T(KC_ENT), LT(_VIM_MAC, KC_BSPC),  TD(TD_CAD), KC_RGUI
 ),
 /* _VIM
@@ -183,36 +183,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           return true;
         case LT(0,KC_X):
             if (!record->tap.count && record->event.pressed) {
-                tap_code16(C(KC_X)); // Intercept hold function to send Ctrl-X
-                return true;             // Return true for normal processing of tap keycode
+                if(layer_state_is(_QWERTY_MAC)){
+                    tap_code16(LGUI(KC_X)); // Intercept hold function to send CMD-X
+                }
+                if(layer_state_is(_QWERTY)){
+                    tap_code16(C(KC_X)); // Intercept hold function to send Ctrl-X
+                }
             }
+            return true;             // Return true for normal processing of tap keycode
         case LT(0,KC_C):
             if (!record->tap.count && record->event.pressed) {
-                tap_code16(RCTL(KC_INS)); // Intercept hold function to send Ctrl-C
-                return true;
+                if(layer_state_is(_QWERTY_MAC)){
+                    tap_code16(LGUI(KC_C)); // Intercept hold function to send CMD-X
+                }
+                if(layer_state_is(_QWERTY)){
+                    tap_code16(C(KC_C)); // Intercept hold function to send Ctrl-X
+                }
             }
             return true;             // Return true for normal processing of tap keycode
         case LT(0,KC_V):
             if (!record->tap.count && record->event.pressed) {
-                tap_code16(RSFT(KC_INS)); // Intercept hold function to send Ctrl-V
-                return true;
+                if(layer_state_is(_QWERTY_MAC)){
+                    tap_code16(LGUI(KC_V)); // Intercept hold function to send CMD-X
+                }
+                if(layer_state_is(_QWERTY)){
+                    tap_code16(C(KC_V)); // Intercept hold function to send Ctrl-X
+                }
             }
             return true;             // Return true for normal processing of tap keycode
         case LT(0,KC_Z):
             if (!record->tap.count && record->event.pressed) {
-                tap_code16(C(KC_Z)); // Intercept hold function to send Ctrl-V
-                return true;
-            }
-            return true;             // Return true for normal processing of tap keycode
-        case LT(1,KC_X):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(G(KC_X)); // Intercept hold function to send CMD-X
-                return true;             // Return true for normal processing of tap keycode
-            }
-        case LT(1,KC_Z):
-            if (!record->tap.count && record->event.pressed) {
-                tap_code16(G(KC_Z)); // Intercept hold function to send Ctrl-V
-                return true;
+                if(layer_state_is(_QWERTY_MAC)){
+                    tap_code16(LGUI(KC_Z)); // Intercept hold function to send CMD-X
+                }
+                if(layer_state_is(_QWERTY)){
+                    tap_code16(C(KC_Z)); // Intercept hold function to send Ctrl-X
+                }
             }
             return true;             // Return true for normal processing of tap keycode
         default:
