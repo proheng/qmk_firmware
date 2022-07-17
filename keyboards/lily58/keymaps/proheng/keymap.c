@@ -37,14 +37,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   LCTL_T(KC_Q),   LALT_T(KC_W),   LGUI_T(KC_E),   LSFT_T(KC_R),    KC_T,              KC_Y,    RSFT_T(KC_U),  RGUI_T(KC_I), RALT_T(KC_O), RCTL_T(KC_P), KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,                     KC_H,    KC_J,    KC_K, KC_L, KC_SCLN, KC_QUOT,
   KC_LSFT,  LT(0,KC_Z),  LT(0,KC_X),    LT(0,KC_C),    LT(0,KC_V),    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                   KC_LGUI, MO(_VIM),  LCTL_T(KC_SPC), C_S_T(KC_ENT),       LCA_T(KC_ENT), LT(_VIM, KC_BSPC),  TD(TD_CAD), KC_RGUI
+                   KC_MEDIA_PLAY_PAUSE, MO(_VIM),  LCTL_T(KC_SPC), C_S_T(KC_ENT),       LCA_T(KC_ENT), LT(_VIM, KC_BSPC),  TD(TD_CAD), KC_MEDIA_PLAY_PAUSE
 ),
  [_QWERTY_MAC] = LAYOUT(
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
   KC_TAB,   LCTL_T(KC_Q),   LALT_T(KC_W),   LGUI_T(KC_E),   LSFT_T(KC_R),    KC_T,              KC_Y,    RSFT_T(KC_U),  RGUI_T(KC_I), RALT_T(KC_O), RCTL_T(KC_P), KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,                     KC_H,    KC_J,    KC_K, KC_L, KC_SCLN, KC_QUOT,
   KC_LSFT,  _______,  _______,    _______,    _______,    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                   KC_LGUI, MO(_VIM_MAC),  LGUI_T(KC_SPC), C_S_T(KC_ENT),       LCA_T(KC_ENT), LT(_VIM_MAC, KC_BSPC),  TD(TD_CAD), KC_RGUI
+                   KC_MEDIA_PLAY_PAUSE, MO(_VIM_MAC),  LGUI_T(KC_SPC), LSG_T(KC_ENT),       LAG_T(KC_ENT), LT(_VIM_MAC, KC_BSPC),  TD(TD_CAD), KC_MEDIA_PLAY_PAUSE
 ),
 /* _VIM
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -70,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, TD(TD_KC_LBRC), TD(TD_KC_RBRC), TD(TD_KC_BSLS),
   XXXXXXX, XXXXXXX, LALT(KC_RGHT), LALT(KC_RGHT), XXXXXXX, XXXXXXX,       RCTL(KC_INS), RCTL(KC_Z), XXXXXXX, XXXXXXX, RSFT(KC_INS), XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC, XXXXXXX, XXXXXXX,                   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, LGUI(KC_LEFT), LGUI(KC_RIGHT),
-  _______, XXXXXXX, KC_DEL,  XXXXXXX, XXXXXXX, LCTL(KC_LEFT),  XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, _______,
+  _______, XXXXXXX, KC_DEL,  XXXXXXX, XXXXXXX, LALT(KC_LEFT),  XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, _______,
                              _______, _______, _______, _______, _______,  _______, _______, _______
 ),
 
