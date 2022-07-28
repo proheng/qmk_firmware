@@ -2,6 +2,7 @@
 #include "action_layer.h"
 #include "quantum.h"
 #include "quantum_keycodes.h"
+#include "key.c"
 #define PRESS(keycode) register_code16(keycode)
 #define RELEASE(keycode) unregister_code16(keycode)
 
@@ -127,18 +128,7 @@ void cad_finished(qk_tap_dance_state_t *state, void *user_data) {
         case TD_SINGLE_TAP:
             set_oneshot_layer(4, ONESHOT_START); break;
         case TD_DOUBLE_TAP:
-            tap_code16(KC_A);
-            tap_code16(KC_W);
-            tap_code16(KC_3);
-            tap_code16(KC_E);
-            tap_code16(KC_D);
-            tap_code16(KC_S);
-            tap_code16(S(KC_A));
-            tap_code16(S(KC_W));
-            tap_code16(S(KC_3));
-            tap_code16(S(KC_E));
-            tap_code16(S(KC_D));
-            tap_code16(S(KC_S));
+            keys();
             break;
         case TD_TRIPLE_TAP:
             tap_code16(KC_CAD);
