@@ -36,14 +36,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
   KC_TAB,   LCTL_T(KC_Q),   LALT_T(KC_W),   LGUI_T(KC_E),   LSFT_T(KC_R),    KC_T,              KC_Y,    RSFT_T(KC_U),  RGUI_T(KC_I), RALT_T(KC_O), RCTL_T(KC_P), KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,                     KC_H,    KC_J,    KC_K, KC_L, KC_SCLN, KC_QUOT,
-  KC_LSFT,  LT(0,KC_Z),  LT(0,KC_X),    LT(0,KC_C),    LT(0,KC_V),    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
+  KC_LSFT,  LT(0,KC_Z),  LT(0,KC_X),    LT(0,KC_C),    LT(0,KC_V),    LT(0,KC_B), LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
                    KC_MEDIA_PLAY_PAUSE, MO(_VIM),  LCTL_T(KC_SPC), C_S_T(KC_ENT),       LCA_T(KC_ENT), LT(_VIM, KC_BSPC),  TD(TD_CAD), KC_MEDIA_PLAY_PAUSE
 ),
  [_QWERTY_MAC] = LAYOUT(
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
   KC_TAB,   LCTL_T(KC_Q),   LALT_T(KC_W),   LGUI_T(KC_E),   LSFT_T(KC_R),    KC_T,              KC_Y,    RSFT_T(KC_U),  RGUI_T(KC_I), RALT_T(KC_O), RCTL_T(KC_P), KC_EQL,
   TD(TD_CAP),  KC_A,   KC_S,    KC_D,    KC_F, KC_G,                     KC_H,    KC_J,    KC_K, KC_L, KC_SCLN, KC_QUOT,
-  KC_LSFT,  _______,  _______,    _______,    _______,    KC_B, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
+  KC_LSFT,  _______,  _______,    _______,    _______,    _______, LEFT_KNOB,            RIGHT_KNOB,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
                    KC_MEDIA_PLAY_PAUSE, MO(_VIM_MAC),  LGUI_T(KC_SPC), LSG_T(KC_ENT),       LAG_T(KC_ENT), LT(_VIM_MAC, KC_BSPC),  TD(TD_CAD), KC_MEDIA_PLAY_PAUSE
 ),
 /* _VIM
@@ -221,6 +221,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return true;             // Return true for normal processing of tap keycode
+        case LT(0,KC_B):
+            if (!record->tap.count && record->event.pressed) {
+                if(layer_state_is(_QWERTY_MAC)){
+                    tap_code16(LGUI(KC_B)); // Intercept hold function to send CMD-X
+                }
+                if(layer_state_is(_QWERTY)){
+                    tap_code16(C(KC_B)); // Intercept hold function to send Ctrl-X
+                }
+            }
+            return true;             // Return true for normal processing of tap keycode
         default:
           return true;
     }
@@ -348,19 +358,19 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 }
 void matrix_scan_user(void) {
   if (is_alt_tab_active) {
-    if (timer_elapsed(alt_tab_timer) > 1000) {
+    if (timer_elapsed(alt_tab_timer) > 500) {
       unregister_code(KC_LALT);
       is_alt_tab_active = false;
     }
   }
   if (is_ctrl_tab_active) {
-    if (timer_elapsed(ctrl_tab_timer) > 1000) {
+    if (timer_elapsed(ctrl_tab_timer) > 100) {
       unregister_code(KC_LCTL);
       is_ctrl_tab_active = false;
     }
   }
   if (is_gui_tab_active) {
-    if (timer_elapsed(gui_tab_timer) > 1000) {
+    if (timer_elapsed(gui_tab_timer) > 500) {
       unregister_code(KC_LGUI);
       is_gui_tab_active = false;
     }
