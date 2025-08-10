@@ -19,3 +19,8 @@ SRC +=  ./lib/rgb_state_reader.c \
         # ./lib/mode_icon_reader.c \
         # ./lib/host_led_state_reader.c \
         # ./lib/timelogger.c \
+
+TAP_DANCE_ENABLE = yes
+ENCODER_ENABLE = yes        # Encoder support
+
+MOUSEKEY_ENABLE = yes

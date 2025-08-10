@@ -1,7 +1,11 @@
 #include QMK_KEYBOARD_H
+#include "process_tap_dance.h"
 
 enum custom_keycodes {
     CAD = 1212,
+    TD_CTRLV = 0,
+    TD_CTRLC = 1,
+    TD_CTRLX = 2,
 };
 enum layer_number {
   _QWERTY = 0,
@@ -19,7 +23,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | ESC  |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
  * |------+------+------+------+------+------|CG_TOGG|    |  CAD  |------+------+------+------+------+------|
- * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
+ * |LShift|   Z  | TD_X | TD_C | TD_V |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   |      |      |      | /       /       \      \  |      |      |      |
  *                   |      |      |      |/       /         \      \ |      |      |      |
@@ -41,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |-------.    ,-------| LEFT | DOWN |  UP  | RIGHT| HOME | END  |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * | LSFT |      |      |      |      |      |-------|    |-------|      |PGDOWN| PGUP |   {  |  }   |  |   |
+ * | LSFT |      |      |      |      |      |-------|    |-------|      |ScrDn| ScrUp |ScrLft|ScrRit|  |   |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   |      |      |      | /       /       \      \  |      |      |      |
  *                   |      |      |      |/       /         \      \ |      |      |      |
@@ -51,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX,KC_LBRC, KC_RBRC, KC_BSLS,
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                     KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,                   KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_HOME, KC_END,
-  KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, KC_LCBR, KC_RCBR, KC_PIPE,
+  KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MS_WH_DOWN, KC_MS_WH_UP, QK_MOUSE_WHEEL_LEFT, QK_MOUSE_WHEEL_RIGHT, KC_PIPE,
                              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX
 ),
 /* NUM
@@ -91,4 +95,55 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
     }
     return true;
+}
+// Tap Dance function for V / Ctrl+V
+void td_ctrlv_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->pressed) { // Hold: send Ctrl+V
+        register_code(KC_LCTL); tap_code(KC_V); unregister_code(KC_LCTL); }
+    else if (state->count == 1) {
+        // Tap: send V
+        tap_code(KC_V);
+    }
+}
+// Tap Dance function for C / Ctrl+C
+void td_ctrlc_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->pressed) { // Hold: send Ctrl+C
+        register_code(KC_LCTL); tap_code(KC_C); unregister_code(KC_LCTL); }
+    else if (state->count == 1) {
+        // Tap: send C
+        tap_code(KC_C);
+    }
+}
+// Tap Dance function for C / Ctrl+X
+void td_ctrlx_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->pressed) { // Hold: send Ctrl+X
+        register_code(KC_LCTL); tap_code(KC_X); unregister_code(KC_LCTL); }
+    else if (state->count == 1) {
+        // Tap: send X
+        tap_code(KC_X);
+    }
+}
+void td_reset(tap_dance_state_t *state, void *user_data) {  }
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_CTRLV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_ctrlv_finished, td_reset),
+    [TD_CTRLC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_ctrlc_finished, td_reset),
+    [TD_CTRLX] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_ctrlx_finished, td_reset),
+};
+
+
+bool encoder_update_user(uint8_t index, bool clockwise) {
+    if (index == 1) { /* First encoder */
+        if (!clockwise) {
+            tap_code16(KC_MS_WH_DOWN);
+        } else {
+            tap_code16(KC_MS_WH_UP);
+        }
+    } else if (index == 0) { /* Second encoder */
+        if (!clockwise) {
+            tap_code16(QK_MOUSE_WHEEL_RIGHT);
+        } else {
+            tap_code16(QK_MOUSE_WHEEL_LEFT);
+        }
+    }
+    return false;
 }

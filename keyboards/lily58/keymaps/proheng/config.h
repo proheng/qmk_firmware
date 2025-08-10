@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_EFFECT_RAINBOW_MOOD
 #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
 #define RGBLIGHT_EFFECT_SNAKE
-#define RGBLIGHT_EFFECT_KNIGHT
+#define RGBLIGHT_EFFECT_KNIGHTa
 #define RGBLIGHT_EFFECT_CHRISTMAS
 #define RGBLIGHT_EFFECT_STATIC_GRADIENT
 #define RGBLIGHT_EFFECT_RGB_TEST
@@ -48,3 +48,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #define SPLIT_USB_DETECT
+
+
+
+#define ENCODER_RESOLUTION 4
+#define ENCODERS_PAD_A { F5 }
+#define ENCODERS_PAD_B { F4 }
